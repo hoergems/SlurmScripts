@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 #SBATCH --job-name=abtDubin1
-#SBATCH --array=1-2
+#SBATCH --array=1-4
 #SBATCH --time=30:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
@@ -11,4 +11,4 @@
 
 source /home/hoe01h/.bash_profile
 cd /data/hoe01h/WAFRExtension/abt/problems/robot_problem
-./abt_dubin --cfg WAFRExtension/dubin$SLURM_ARRAY_TASK_ID.cfg
+./abt_dubin --cfg /data/hoe01h/WAFRExtension/ConfigFiles/WAFRExtension/emptyEnvironmentABTHFR/dubin/dubin$SLURM_ARRAY_TASK_ID.cfg
