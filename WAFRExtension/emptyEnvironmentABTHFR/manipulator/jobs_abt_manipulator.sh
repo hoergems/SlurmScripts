@@ -11,4 +11,4 @@
 
 source /home/hoe01h/.bash_profile
 cd /data/hoe01h/WAFRExtension/abt/problems/robot_problem
-./abt_manipulator --cfg data/hoe01h/WAFRExtension/ConfigFiles/WAFRExtension/emptyEnvironmentABTHFR/manipulator/manipulator4DOFEmpty$SLURM_ARRAY_TASK_ID.cfg
+./abt_manipulator --cfg /data/hoe01h/WAFRExtension/ConfigFiles/WAFRExtension/emptyEnvironmentABTHFR/manipulator/manipulator4DOFEmpty$SLURM_ARRAY_TASK_ID.cfg
