@@ -12,3 +12,4 @@
 source /home/hoe01h/.bash_profile
 cd /data/hoe01h/WAFRExtension/abt3/problems/robot_problem
 ./abt_dubin --cfg /data/hoe01h/WAFRExtension/ConfigFiles/WAFRExtension/emptyEnvironmentABTHFR/dubin/oldReward/dubin$SLURM_ARRAY_TASK_ID.cfg
+./serializer -p /datastore/hoe01h/WAFRExtension/emptyEnvironmentABTHFR/dubin/oldReward/$SLURM_ARRAY_TASK_ID
