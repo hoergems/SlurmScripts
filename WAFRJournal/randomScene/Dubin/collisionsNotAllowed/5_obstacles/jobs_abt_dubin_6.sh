@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 #SBATCH --job-name=5DubinABT
-#SBATCH --array=1-100
+#SBATCH --array=0-99
 #SBATCH --time=00:15:00
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
