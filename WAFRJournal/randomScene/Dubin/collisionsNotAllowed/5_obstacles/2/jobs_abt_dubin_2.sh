@@ -11,4 +11,4 @@
 
 source /home/hoe01h/.bash_profile
 cd /data/hoe01h/Downloads/frapu/abt/problems/robot_problem
-./abt_dubin --cfg /data/hoe01h/Downloads/frapu/ConfigFiles/WAFRJournal/randomScene/Dubin/collisionsNotAllowed/5_obstacles/2/dubin$SLURM_ARRAY_TASK_ID.cfg
+./abt_dubin --cfg /data/hoe01h/Downloads/frapu/ConfigFiles/WAFRJournal/randomScene/Dubin/collisionsNotAllowed/5_obstacles/cfg/2/dubin$SLURM_ARRAY_TASK_ID.cfg
