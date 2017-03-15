@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 #SBATCH --job-name=10DubinABT
-#SBATCH --array=0-99
+#SBATCH --array=0-49
 #SBATCH --time=00:20:00
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
@@ -11,4 +11,4 @@
 
 source /home/hoe01h/.bash_profile
 cd /data/hoe01h/Downloads/frapu/abt/problems/robot_problem
-./abt_dubin --cfg /data/hoe01h/Downloads/frapu/ConfigFiles/WAFRJournal/randomScene/Dubin/collisionsNotAllowed/10_obstacles/cfg/100/dubin$SLURM_ARRAY_TASK_ID.cfg
+./abt_dubin --cfg /data/hoe01h/Downloads/frapu/ConfigFiles/WAFRJournal/randomScene/Dubin/collisionsNotAllowed/10_obstacles/cfg/7/dubin$SLURM_ARRAY_TASK_ID.cfg
