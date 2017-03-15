@@ -5,7 +5,7 @@ unset output
 for i in $(seq 10)
 do
   cd $i
-  for ((a=1; a <= 10 ; a++))
+  for ((a=0; a < 10 ; a++))
   do
     if [ -z "$output" ]
     then
