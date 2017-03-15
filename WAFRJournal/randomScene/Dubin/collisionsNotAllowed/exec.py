@@ -10,7 +10,8 @@ for i in xrange(6):
     numObstacles += 5
     for j in xrange(1, 11):
 	cmd = "sbatch jobs_abt_dubin_" + str(j) + ".sh"
-	path = str(numObstacles) + "_obstacles/" + str(j) + "/"
+	path = "/datastore/hoe01h/WAFRJournal/SlurmScripts/WAFRJournal/randomScene/Dubin/collisionsNotAllowed/" + str(numObstacles) + "_obstacles/" + str(j) + "/"
+	
 	print path
 	print cmd
 	popen = subprocess.Popen(cmd, cwd=path)
