@@ -12,7 +12,7 @@ for i in xrange(6):
 	cmd = "sbatch jobs_abt_dubin_" + str(j) + ".sh"
 	exec_path = str(numObstacles) + "_obstacles/" + str(j) + "/"
 	
-	print path
+	print exec_path
 	print cmd
 	popen = subprocess.Popen(cmd, cwd=exec_path, shell=True)
 	popen.wait()
