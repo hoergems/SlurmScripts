@@ -23,7 +23,7 @@ for i in xrange(1, 11):
         string += "#SBATCH --mail-type=ALL \n"
         string += "#SBATCH --mail-user=hoergems@gmail.com \n"
         string += "source /home/hoe01h/.bash_profile \n"
-        string += "cd /data/hoe01h/Downloads/frapu/abt/problems/robot_problem \n"
+        string += "cd /data/hoe01h/Downloads/frapu/abt/bin \n"
         string += "./abt_dubin --cfg /data/hoe01h/Downloads/frapu/ConfigFiles/WAFRJournal/randomScene/Dubin/collisionsNotAllowed/"
         string += str(numObstacles)
         string += "_obstacles/cfg/"
