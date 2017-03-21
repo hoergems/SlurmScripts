@@ -2,20 +2,29 @@ import sys
 import os
 import subprocess
 import glob
+import argparse
+import fileinput
+
+parser = argparse.ArgumentParser(description='Process some integers.')
+parser.add_argument('-nO', '--numObstacles', type=int, default=5,
+                    help='Number of obstacles')
+parser.add_argument('-nP', '--numParallelJobs', type=int, default=10,
+                    help='Number of obstacles')
+args = parser.parse_args()
+
+numObstacles = args.numObstacles
+numParallelJobs = args.numParallelJobs
 
 shared_path = os.path.dirname(os.path.abspath(__file__))
-numObstacles = 25
-
-
 
 for i in xrange(1, 11):
-    for j in xrange(0, 10):
+    for j in xrange(0, 100/numParallelJobs):
         string = "#!/bin/sh \n"
         string += "# \n"
         string += "#SBATCH --job-name=" + str(numObstacles)
         string += "DubinABT \n"
         string += "#SBATCH --array="
-        string += str(j * 10) + "-" + str(j * 10 + 9) + " \n"
+        string += str(j * numParallelJobs) + "-" + str(j * numParallelJobs + numParallelJobs-1) + " \n"
         string += "#SBATCH --time=00:20:00 \n"
         string += "#SBATCH --nodes=1 \n"
         string += "#SBATCH --ntasks=1 \n"
@@ -34,19 +43,13 @@ for i in xrange(1, 11):
 	    os.makedirs(str(i))
 	with open(str(i) + "/jobs_abt_dubin_" + str(j) + ".sh", 'a+') as f:
 	    f.write(string)
-	    
-        
-    
-    
-    
-    
-    '''numObstacles += 5
-    for j in xrange(1, 11):
-	cmd = "sbatch jobs_abt_dubin_" + str(j) + ".sh"
-	exec_path = str(numObstacles) + "_obstacles/" + str(j) + "/"
 	
-	print exec_path
-	print cmd
-	popen = subprocess.Popen(cmd, cwd=exec_path, shell=True)
-	popen.wait()'''
+with open("run.sh", 'a+') as f:
+    for line in f.readlines():
+	print line
+	    
+for line in fileinput.input("run.sh", inplace=1):
+    if "for ((a=0;" in line:
+	line = "  for ((a=0; a < " + str(100/numParallelJobs) + "; a++))\n"
+    sys.stdout.write(line)
 print "launched \n"
