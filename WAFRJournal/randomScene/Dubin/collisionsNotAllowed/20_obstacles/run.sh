@@ -1,11 +1,17 @@
 #! /bin/bash
 
 unset output
+start_index=1
 
-for i in $(seq 10)
-do
+if [ $1 != "" ] 
+then
+    start_index=$1
+fi
+
+for (( i=$start_index; i < 11; i++ ))
+do  
   cd $i
-  for ((a=0; a < 10 ; a++))
+  for ((a=0; a < 5; a++))
   do
     if [ -z "$output" ]
     then
