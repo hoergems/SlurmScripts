@@ -2,11 +2,22 @@
 
 unset output
 start_index=1
+robot=""
 
-if [ $1 != "" ] 
+if [ $# -eq 0 ]
 then
-    start_index=$1
+   echo "No robot provided"
+   exit
+else
+   robot=$1
 fi
+
+if [ $2 != "" ] 
+then
+    start_index=$2
+fi
+
+echo "START INDEX $start_index"
 
 for (( i=$start_index; i < 11; i++ ))
 do  
@@ -14,10 +25,11 @@ do
   for ((a=0; a < 5; a++))
   do
     if [ -z "$output" ]
-    then
-      output=$(sbatch jobs_abt_dubin_$a.sh)      
+    then      
+      echo "Exec jobs_abt_${robot}_${a}.sh"
+      output=$(sbatch jobs_abt_${robot}_${a}.sh)      
     else
-      output=$(sbatch --dependency=afterok:$jid jobs_abt_dubin_$a.sh)
+      output=$(sbatch --dependency=afterok:$jid jobs_abt_${robot}_${a}.sh)
     fi
     jid=$(echo $output | tr -cd '[[:digit:]]')
   done
