@@ -1,21 +1,46 @@
 #! /bin/bash
+# Usage: ./run.sh robot start_index (should be 1 when starting from the beginning) algorithm
 
 unset output
 start_index=1
-robot=""
+algorithm=""
 
-if [ $# -eq 0 ]
+if [ -z $1 ]
 then
-   echo "No robot provided"
-   exit
-else
-   robot=$1
+    echo "No robot provided"
+    exit    
 fi
 
-if [ $2 != "" ] 
+robot=$1
+
+if [ -z $2 ]
 then
-    start_index=$2
+    echo "No start index provided"
+    exit
 fi
+
+start_index=$2
+
+#if [ $# -eq 0 ]
+#then
+#   echo "No robot provided"
+#   exit
+#else
+#   robot=$1
+#fi
+
+#if [ $2 != "" ] 
+#then
+#    start_index=$2
+#fi
+
+if [ -z $3 ]
+then
+    echo "No algorithm provided"
+    exit 
+fi
+
+algorithm=$3 
 
 echo "START INDEX $start_index"
 
@@ -26,10 +51,10 @@ do
   do
     if [ -z "$output" ]
     then      
-      echo "Exec jobs_abt_${robot}_${a}.sh"
-      output=$(sbatch jobs_abt_${robot}_${a}.sh)      
+      echo "Exec jobs_${algorithm}_${robot}_${a}.sh"
+      output=$(sbatch jobs_${algorithm}_${robot}_${a}.sh)      
     else
-      output=$(sbatch --dependency=afterok:$jid jobs_abt_${robot}_${a}.sh)
+      output=$(sbatch --dependency=afterok:$jid jobs_${algorithm}_${robot}_${a}.sh)
     fi
     jid=$(echo $output | tr -cd '[[:digit:]]')
   done
