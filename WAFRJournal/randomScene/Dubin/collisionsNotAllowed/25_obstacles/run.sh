@@ -46,14 +46,17 @@ echo "START INDEX $start_index"
 
 for (( i=$start_index; i < 11; i++ ))
 do  
+  echo "idx: $i"
   cd $i
   for ((a=0; a < 5; a++))
   do
+    echo "a: $a"
     if [ -z "$output" ]
     then      
       echo "Exec jobs_${algorithm}_${robot}_${a}.sh"
       output=$(sbatch jobs_${algorithm}_${robot}_${a}.sh)      
     else
+      echo "Exec jobs_${algorithm}_${robot}_${a}.sh"
       output=$(sbatch --dependency=afterok:$jid jobs_${algorithm}_${robot}_${a}.sh)
     fi
     jid=$(echo $output | tr -cd '[[:digit:]]')
