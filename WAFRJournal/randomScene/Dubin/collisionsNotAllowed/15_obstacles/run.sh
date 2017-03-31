@@ -61,6 +61,7 @@ do
     fi
     jid=$(echo $output | tr -cd '[[:digit:]]')
     echo "jobID: ${jid}"
+    sleep 1
   done
   cd ..
 done
