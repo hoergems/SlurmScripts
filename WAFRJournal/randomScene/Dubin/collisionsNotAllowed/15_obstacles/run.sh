@@ -43,8 +43,6 @@ fi
 algorithm=$3 
 
 echo "START INDEX $start_index"
-dp=100/5
-echo "${dp}"
 
 for (( i=$start_index; i < 11; i++ ))
 do  
