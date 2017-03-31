@@ -40,7 +40,7 @@ then
     exit 
 fi
 
-algorithm=$3 
+algorithm=$4 
 
 echo "START INDEX $start_index"
 
