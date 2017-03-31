@@ -1,9 +1,10 @@
 #! /bin/bash
-# Usage: ./run.sh robot start_index (should be 1 when starting from the beginning) algorithm
+# Usage: ./run.sh robot start_index (should be 1 when starting from the beginning) onlyIndex|afterIndex algorithm
 
 unset output
 start_index=1
 algorithm=""
+endIndex=11
 
 if [ -z $1 ]
 then
@@ -21,20 +22,19 @@ fi
 
 start_index=$2
 
-#if [ $# -eq 0 ]
-#then
-#   echo "No robot provided"
-#   exit
-#else
-#   robot=$1
-#fi
-
-#if [ $2 != "" ] 
-#then
-#    start_index=$2
-#fi
-
 if [ -z $3 ]
+then
+    echo "No index count provided"
+    exit
+fi
+
+if [ $3 = "onlyIndex" ]
+then
+   endIndex=$start_index
+   endIndex=$((endIndex+1))
+fi
+
+if [ -z $4 ]
 then
     echo "No algorithm provided"
     exit 
@@ -44,7 +44,7 @@ algorithm=$3
 
 echo "START INDEX $start_index"
 
-for (( i=$start_index; i < 11; i++ ))
+for (( i=$start_index; i < $endIndex; i++ ))
 do  
   echo "idx: $i"
   cd $i
