@@ -43,6 +43,8 @@ fi
 algorithm=$3 
 
 echo "START INDEX $start_index"
+dp=100/5
+echo "${dp}"
 
 for (( i=$start_index; i < 11; i++ ))
 do  
@@ -57,7 +59,7 @@ do
       output=$(sbatch jobs_${algorithm}_${robot}_${a}.sh)      
     else
       echo "Exec jobs_${algorithm}_${robot}_${a}.sh"
-      output=$(sbatch --dependency=afterok:$jid jobs_${algorithm}_${robot}_${a}.sh)
+      output=$(sbatch --dependency=afterany:$jid jobs_${algorithm}_${robot}_${a}.sh)
     fi
     jid=$(echo $output | tr -cd '[[:digit:]]')
     echo "jobID: ${jid}"
