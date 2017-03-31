@@ -60,6 +60,7 @@ do
       output=$(sbatch --dependency=afterok:$jid jobs_${algorithm}_${robot}_${a}.sh)
     fi
     jid=$(echo $output | tr -cd '[[:digit:]]')
+    echo "jobID: ${jid}"
   done
   cd ..
 done
