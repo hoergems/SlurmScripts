@@ -35,7 +35,11 @@ for numObstacles in [5, 10, 15, 20, 25]:
 		print fileComps
 		if str(count) not in fileComps:
 		    print "missing: " + str(file)
+		else:
+		    print "NOT missing"
             for file in algs["mhfr"]:
 		fileComps = file.split("_")[-2]
 		if str(count) not in fileComps:
 		    print "missing: " + str(file)
+		else:
+		    print "NOT missing"
