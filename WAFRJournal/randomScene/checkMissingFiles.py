@@ -40,6 +40,6 @@ for numObstacles in [5, 10, 15, 20, 25]:
 		if str(count) in fileComps:
 		    foundMHFR = True
             if not foundABT:
-		print "missing ABT: " + str(count)
+		print "missing ABT: " + path + "/" + str(count)
 	    if not foundMHFR:
-		print "missing MHFR: " + str(count)
+		print "missing MHFR: " + path + "/" + str(count)
