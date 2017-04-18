@@ -31,9 +31,9 @@ for numObstacles in [5, 10, 15, 20, 25]:
 	for count in xrange(1, 101):
 	    for file in algs["abt"]:
 		fileComps = file.split("_")[1]
-		if count not in fileComps:
+		if str(count) not in fileComps:
 		    print "missing: " + str(file)
             for file in algs["mhfr"]:
 		fileComps = file.split("_")[1]
-		if count not in fileComps:
+		if str(count) not in fileComps:
 		    print "missing: " + str(file)
