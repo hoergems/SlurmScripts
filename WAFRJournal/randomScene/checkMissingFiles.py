@@ -26,14 +26,14 @@ for numObstacles in [5, 10, 15, 20, 25]:
 	for file in files:
 	    if "abt" in file:
 		algs["abt"].append(file)
-	    else if "mhfr" in file:
+	    elif "mhfr" in file:
 		algs["mhfr"].append(file)	    
 	for count in xrange(1, 101):
 	    for file in algs["abt"]:
 		fileComps = file.split("_")[1]
 		if count not in fileComps:
-		    print "missing: " file
+		    print "missing: " + str(file)
             for file in algs["mhfr"]:
 		fileComps = file.split("_")[1]
 		if count not in fileComps:
-		    print "missing: " file
+		    print "missing: " + str(file)
