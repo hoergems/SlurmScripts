@@ -16,13 +16,24 @@ if (robot == "4DOF"):
 
 shared_path = os.path.dirname(os.path.abspath(__file__))
 
-for numObstacles in [5, 10, 15, 20, 25]:
+for numObstacles in [5, 10, 15, 20, 25]:    
     for folder in xrange(1, 11):
 	path = "/datastore/hoe01h/WAFRJournal/randomScene/" + robot + "/collisionsNotAllowed/" + str(numObstacles) + "_obstacles/" + str(folder)
 	files = glob.glob(path + "/*.log")
+	algs = {}
+	algs["abt"] = []
+	algs["mhfr"] = []
 	for file in files:
-	    print file
-	'''for count in xrange(1, 101):
-	    
-	for file in glob.glob("*.log"):
-	    print file'''
+	    if "abt" in file:
+		algs["abt"].append(file)
+	    else if "mhfr" in file:
+		algs["mhfr"].append(file)	    
+	for count in xrange(1, 101):
+	    for file in algs["abt"]:
+		fileComps = file.split("_")[1]
+		if count not in fileComps:
+		    print "missing: " file
+            for file in algs["mhfr"]:
+		fileComps = file.split("_")[1]
+		if count not in fileComps:
+		    print "missing: " file
