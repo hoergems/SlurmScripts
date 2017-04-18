@@ -28,7 +28,7 @@ for numObstacles in [5, 10, 15, 20, 25]:
 		algs["abt"].append(file)
 	    elif "mhfr" in file:
 		algs["mhfr"].append(file)	    
-	for count in xrange(1, 101):
+	for count in xrange(0, 100):
 	    foundABT = False
 	    foundMHFR = False
 	    for file in algs["abt"]:		
