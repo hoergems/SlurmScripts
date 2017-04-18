@@ -30,7 +30,9 @@ for numObstacles in [5, 10, 15, 20, 25]:
 		algs["mhfr"].append(file)	    
 	for count in xrange(1, 101):
 	    for file in algs["abt"]:
+		print "file: " + str(file)
 		fileComps = file.split("_")[-2]
+		print fileComps
 		if str(count) not in fileComps:
 		    print "missing: " + str(file)
             for file in algs["mhfr"]:
