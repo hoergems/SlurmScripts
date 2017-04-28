@@ -56,7 +56,7 @@ for i in xrange(1, numConvarianceSteps + 1):
         string += "#SBATCH --mail-type=ALL \n"
         string += "#SBATCH --mail-user=hoergems@gmail.com \n"
         string += "source /home/hoe01h/.bash_profile \n"
-        string += "cd /data/hoe01h/Downloads/frapu/abt/bin \n"
+        string += "cd /data/hoe01h/Downloads/frapu/abt2/abt/bin \n"
         string += "./abt_" + robotExec + " --cfg /data/hoe01h/Downloads/frapu/ConfigFiles/WAFRJournal/randomScene/" + robot + "/" + folderPrefix + "/"
         string += str(numObstacles)
         string += "_obstacles/cfg/"
@@ -86,7 +86,7 @@ for i in xrange(1, numConvarianceSteps + 1):
         string += "#SBATCH --mail-type=ALL \n"
         string += "#SBATCH --mail-user=hoergems@gmail.com \n"
         string += "source /home/hoe01h/.bash_profile \n"
-        string += "cd /data/hoe01h/Downloads/frapu/abt/bin \n"
+        string += "cd /data/hoe01h/Downloads/frapu/abt2/abt/bin \n"
         string += "./hfr_" + robotExec + " --cfg /data/hoe01h/Downloads/frapu/ConfigFiles/WAFRJournal/randomScene/" + robot + "/" + folderPrefix + "/"
         string += str(numObstacles)
         string += "_obstacles/cfg/"
