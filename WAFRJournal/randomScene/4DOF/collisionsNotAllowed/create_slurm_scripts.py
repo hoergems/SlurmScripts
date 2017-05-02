@@ -17,7 +17,7 @@ parser.add_argument('-nr', '--numRuns', type=int, default=100,
                     help='Number of runs')
 parser.add_argument('-r', '--robot', type=str, default="Dubin", help="The robot")
 parser.add_argument('-m', '--memory', type=str, default="4096", help="The amout of memory requested per job")
-parser.add_argument('-f', '--folder', type=str, default="collisionNotAllowed", help="Folder prefix")
+parser.add_argument('-f', '--folder', type=str, default="collisionsNotAllowed", help="Folder prefix")
 
 args = parser.parse_args()
 
