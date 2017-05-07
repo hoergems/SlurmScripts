@@ -30,6 +30,7 @@ for numObstacles in [5, 10, 15, 20, 25, 30]:
 		if "Percentage of successful runs:" in line:
 		  validLogFile = True
 	    if not validLogFile:
+	      print "deleting " + str(file)
 	      os.remove(file)
 	    if "abt" in file:
 		algs["abt"].append(file)
