@@ -25,7 +25,7 @@ for numObstacles in [5, 10, 15, 20, 25, 30]:
 	algs["mhfr"] = []
 	for file in files:
 	    validLogFile = False
-	    with open() as f:
+	    with open(file) as f:
 	      for line in f.readlines():
 		if "Percentage of successful runs:" in line:
 		  validLogFile = True
