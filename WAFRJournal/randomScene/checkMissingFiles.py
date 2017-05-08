@@ -16,10 +16,20 @@ if (robot == "4DOF"):
 
 shared_path = os.path.dirname(os.path.abspath(__file__))
 
-for numObstacles in [5, 10, 15, 20, 25]:    
+for numObstacles in [5, 10, 15, 20, 25, 30]:    
     for folder in xrange(1, 11):
 	path = "/datastore/hoe01h/WAFRJournal/randomScene/" + robot + "/collisionsNotAllowed/" + str(numObstacles) + "_obstacles/" + str(folder)
 	files = glob.glob(path + "/*.log")
+	
+	# Delete invalid files
+	for file in files:
+	    fileValid = False
+	    with open(file, 'r') as f:
+		for line in f.readlines():
+		    if "Percentage of successful runs:" in line:
+			fileValid = True
+	    if not fileValid:
+		os.remove(file)
 	algs = {}
 	algs["abt"] = []
 	algs["mhfr"] = []
