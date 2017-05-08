@@ -9,7 +9,7 @@ fi
 
 robot=$1
 
-cd /data/hoe01h/Downloads/frapu/abt_stats/abt/bin
+cd /data/hoe01h/Downloads/frapu/abt/bin
 for NUM_OBSTACLES in 5 10 15 20 25 30 
 do   
    for FOLDER in {1..10}
