@@ -50,7 +50,7 @@ for i in xrange(1, numConvarianceSteps+1):
 	    string += "#SBATCH --nodes=1 \n"
 	    string += "#SBATCH --ntasks=1 \n"
 	    string += "#SBATCH --mem=" + memory + " \n"
-	    string += "#SBATCH --mail-type=ALL \n"
+	    string += "#SBATCH --mail-type=FAIL \n"
 	    string += "#SBATCH --mail-user=hoergems@gmail.com \n"
 	    string += "source /home/hoe01h/.bash_profile \n"
 	    string += "cd /data/hoe01h/Downloads/frapu/abt/abt/bin \n"
@@ -80,7 +80,7 @@ for i in xrange(1, numConvarianceSteps+1):
 	    string += "#SBATCH --ntasks=1 \n"
 	    string += "#SBATCH --cpus-per-task=8 \n"
 	    string += "#SBATCH --mem=" + memory + " \n"
-	    string += "#SBATCH --mail-type=ALL \n"
+	    string += "#SBATCH --mail-type=FAIL \n"
 	    string += "#SBATCH --mail-user=hoergems@gmail.com \n"
 	    string += "source /home/hoe01h/.bash_profile \n"
 	    string += "cd /data/hoe01h/Downloads/frapu/abt/abt/bin \n"
@@ -89,9 +89,9 @@ for i in xrange(1, numConvarianceSteps+1):
 	    #string += "/" + robot + "$SLURM_ARRAY_TASK_ID.cfg \n"  
 	    if not os.path.exists("slurm/" + folderStr):	    
 		os.makedirs("slurm/" + folderStr)
-	    if (os.path.exists("slurm/" + folderStr + "/jobs_abt_" + robot + "_" + str(k) + ".sh")):
-		os.remove("slurm/" + folderStr + "/jobs_abt_" + robot + "_" + str(k) + ".sh")
-	    with open("slurm/" + folderStr + "/jobs_abt_" + robot + "_" + str(k) + ".sh", 'a+') as f:
+	    if (os.path.exists("slurm/" + folderStr + "/jobs_mhfr_" + robot + "_" + str(k) + ".sh")):
+		os.remove("slurm/" + folderStr + "/jobs_mhfr_" + robot + "_" + str(k) + ".sh")
+	    with open("slurm/" + folderStr + "/jobs_mhfr_" + robot + "_" + str(k) + ".sh", 'a+') as f:
 		f.write(string)
         
 shutil.copyfile("run.sh", folder + "/run.sh")
