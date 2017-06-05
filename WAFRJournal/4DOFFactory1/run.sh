@@ -54,7 +54,7 @@ do
 	  fold+="_obs"
 	  echo "==============="
 	  echo $fold
-	  cd fold	  
+	  cd $fold	  
 	  for ((a=0; a < 5; a++))
 	  do
 		echo "a: $a"
