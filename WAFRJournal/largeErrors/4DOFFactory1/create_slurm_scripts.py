@@ -88,7 +88,7 @@ for i in xrange(1, numConvarianceSteps + 1):
 	    string += "#SBATCH --mail-type=END,FAIL \n"
 	    string += "#SBATCH --mail-user=hoergems@gmail.com \n"
 	    string += "source /home/hoe01h/.bash_profile \n"
-	    string += "gzMasterUriPort=`expr 11345 + $SLURM_ARRAY_TASK_ID + 8` \n"
+	    string += "gzMasterUriPort=`expr 11345 + $SLURM_ARRAY_TASK_ID \* 8` \n"
 	    string += "echo $gzMasterUriPort \n"
 	    string += "export GAZEBO_MASTER_URI=http://localhost:$gzMasterUriPort \n"
 	    string += "cd /data/hoe01h/tapir_devel/bin \n"
