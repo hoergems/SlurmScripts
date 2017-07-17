@@ -57,7 +57,7 @@ for i in xrange(1, numConvarianceSteps + 1):
 	    string += "#SBATCH --mail-type=END,FAIL \n"
 	    string += "#SBATCH --mail-user=hoergems@gmail.com \n"
 	    string += "source /home/hoe01h/.bash_profile \n"
-	    string += "export GAZEBO_MASTER_URI=http://localhost:" + str(gzMasterUri)
+	    string += "export GAZEBO_MASTER_URI=http://localhost:" + str(gzMasterUri) + " \n"
 	    string += "cd /data/hoe01h/tapir_devel/bin \n"
 	    string += "./abt_robot --cfg /data/hoe01h/ConfigFiles/WAFRJournal/largeErrors/4DOFFactory1/cfg/" + folder2	    
 	    string += "/4DOFFactory1_$SLURM_ARRAY_TASK_ID.cfg \n"        
@@ -88,7 +88,7 @@ for i in xrange(1, numConvarianceSteps + 1):
 	    string += "#SBATCH --mail-type=END,FAIL \n"
 	    string += "#SBATCH --mail-user=hoergems@gmail.com \n"
 	    string += "source /home/hoe01h/.bash_profile \n"
-	    string += "export GAZEBO_MASTER_URI=http://localhost:" + str(gzMasterUri)
+	    string += "export GAZEBO_MASTER_URI=http://localhost:" + str(gzMasterUri) + " \n"
 	    string += "cd /data/hoe01h/tapir_devel/bin \n"
 	    string += "./mhfr_robot --cfg /data/hoe01h/ConfigFiles/WAFRJournal/largeErrors/4DOFFactory1/cfg/" + folder2	    
 	    string += "/4DOFFactory1_$SLURM_ARRAY_TASK_ID.cfg \n"        
