@@ -86,7 +86,7 @@ for i in xrange(1, numConvarianceSteps + 1):
 	    string += "#SBATCH --mail-user=hoergems@gmail.com \n"
 	    string += "source /home/hoe01h/.bash_profile \n"
 	    string += "cd /data/hoe01h/tapir_devel/bin \n"
-	    string += "./abt_robot --cfg /data/hoe01h/ConfigFiles/WAFRJournal/largeErrors/4DOFFactory1/cfg/" + folder2	    
+	    string += "./mhfr_robot --cfg /data/hoe01h/ConfigFiles/WAFRJournal/largeErrors/4DOFFactory1/cfg/" + folder2	    
 	    string += "/4DOFFactory1_$SLURM_ARRAY_TASK_ID.cfg \n"        
 	    if not os.path.exists(folder + "/" + str(i) + "_proc_" + str(j) + "_obs"):
 		os.makedirs(folder + "/" + str(i) + "_proc_" + str(j) + "_obs")
