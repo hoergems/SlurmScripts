@@ -1,4 +1,5 @@
 #! /bin/bash
+unset output
 robot=""
 algorithm=""
 
@@ -19,10 +20,23 @@ fi
 algorithm=$2
 
 obst=0
-for ((a=0; a < 6; a++))
-do
+for ((o=0; o < 6; o++))
+do   
    obst=`expr $obst + 5`
    cd ${obst}_obstacles
-   ./run.sh $robot 1 afterIndex $algorithm
+   for ((a=0; a < 1; a++))
+   do
+     if [ -z "$output" ]
+     then
+       echo "Exec jobs_${algorithm}_${robot}_${a}.sh"
+       output=$(sbatch jobs_${algorithm}_${robot}_${a}.sh)
+     else
+       echo "Exec jobs_${algorithm}_${robot}_${a}.sh"
+       output=$(sbatch --dependency=afterany:$jid jobs_${algorithm}_${robot}_${a}.sh)
+     fi
+     jid=$(echo $output | tr -cd '[[:digit:]]')
+     echo "jobID: ${jid}"
+     sleep 0.1
+   done   
    cd ..
 done
