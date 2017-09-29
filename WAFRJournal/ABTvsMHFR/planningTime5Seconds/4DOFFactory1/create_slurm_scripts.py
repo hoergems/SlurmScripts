@@ -61,8 +61,8 @@ for i in xrange(1, numConvarianceSteps + 1):
 	    string += "gzMasterUriPort=`expr 11345 + $SLURM_ARRAY_TASK_ID` \n"
 	    string += "echo $gzMasterUriPort \n"
 	    string += "export GAZEBO_MASTER_URI=http://localhost:$gzMasterUriPort \n"
-	    string += "cd /data/hoe01h/tapir_devel/bin \n"
-	    string += "./abt_robot --cfg " + configFolder + robot + "/cfg/" + folder2
+	    string += "cd /data/hoe01h/oppt_devel/bin \n"
+	    string += "./abt --cfg " + configFolder + robot + "/cfg/" + folder2
 	    string += "/" + robot + "_$SLURM_ARRAY_TASK_ID.cfg \n"	     
 	    if not os.path.exists(folder + "/" + str(i) + "_proc_" + str(j) + "_obs"):
 		os.makedirs(folder + "/" + str(i) + "_proc_" + str(j) + "_obs")
@@ -93,8 +93,8 @@ for i in xrange(1, numConvarianceSteps + 1):
 	    string += "gzMasterUriPort=`expr 11345 + $SLURM_ARRAY_TASK_ID` \n"
 	    string += "echo $gzMasterUriPort \n"
 	    string += "export GAZEBO_MASTER_URI=http://localhost:$gzMasterUriPort \n"
-	    string += "cd /data/hoe01h/tapir_devel/bin \n"
-	    string += "./mhfr_robot --cfg " + configFolder + robot + "/cfg/" + folder2 
+	    string += "cd /data/hoe01h/oppt_devel/bin \n"
+	    string += "./mhfr --cfg " + configFolder + robot + "/cfg/" + folder2 
 	    string += "/" + robot + "_$SLURM_ARRAY_TASK_ID.cfg \n" 
 	    if not os.path.exists(folder + "/" + str(i) + "_proc_" + str(j) + "_obs"):
 		os.makedirs(folder + "/" + str(i) + "_proc_" + str(j) + "_obs")
