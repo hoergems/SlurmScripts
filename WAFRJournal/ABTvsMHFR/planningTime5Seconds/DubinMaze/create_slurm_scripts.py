@@ -40,6 +40,47 @@ if os.path.isdir(folder):
     shutil.rmtree(folder)
 os.makedirs(folder)
 
+# Create the scripts for MHFR
+for i in xrange(1, numConvarianceSteps + 1):
+    for j in xrange(1, numConvarianceSteps + 1):
+	folder2 = str(i) + "_proc_" + str(j) + "_obs"
+	for k in xrange(0, numRuns/numParallelJobs):	    
+	    string = "#!/bin/sh \n"
+	    string += "# \n"
+	    string += "#SBATCH --job-name=" + str(numObstacles)
+	    string += robot + "MHFR \n"
+	    string += "#SBATCH --array="
+	    string += str(k * numParallelJobs) + "-" + str(k * numParallelJobs + numParallelJobs-1) + " \n"
+	    string += "#SBATCH --time=00:20:00 \n"
+	    string += "#SBATCH --nodes=1 \n"
+	    string += "#SBATCH --ntasks=1 \n"
+	    string += "#SBATCH --cpus-per-task=8 \n"
+	    string += "#SBATCH --mem=" + memory + " \n"
+	    string += "#SBATCH --mail-type=NONE \n"
+	    string += "#SBATCH --mail-user=hoergems@gmail.com \n"
+	    string += "source /home/hoe01h/.bash_profile \n"
+
+            # Find out how many ports we need
+            cfgFile = configFolder + robot + "/cfg/" + folder2 + "/" + robot + "_0.cfg"
+            nThreads = 1                      
+            with open(cfgFile, 'r') as cfFile:
+                for line in cfFile.readlines():
+                   if "numThreads" in line:
+                       nThreads = int(line.split("=")[1].strip()) + 2
+            
+            string += "gzMasterUriPort=`expr 11345 + " + str(nThreads) + " \\\* $SLURM_ARRAY_TASK_ID` \n"            
+	    string += "echo $gzMasterUriPort \n"
+	    string += "export GAZEBO_MASTER_URI=http://localhost:$gzMasterUriPort \n"
+	    string += "cd /data/hoe01h/oppt_devel/bin \n"
+	    string += "./mhfr --cfg " + configFolder + robot + "/cfg/" + folder2 
+	    string += "/" + robot + "_$SLURM_ARRAY_TASK_ID.cfg \n" 
+	    if not os.path.exists(folder + "/" + str(i) + "_proc_" + str(j) + "_obs"):
+		os.makedirs(folder + "/" + str(i) + "_proc_" + str(j) + "_obs")
+	    if (os.path.exists(folder + "/" + str(i) + "_proc_" + str(j) + "_obs" + "/jobs_mfhr_" + robot + "_" + str(k) + ".sh")):
+		os.remove(folder + "/" + str(i) + "_proc_" + str(j) + "_obs" + "/jobs_mhfr_" + robot + "_" + str(k) + ".sh")
+	    with open(folder + "/" + str(i) + "_proc_" + str(j) + "_obs" + "/jobs_mhfr_" + robot + "_" + str(k) + ".sh", 'a+') as f:
+		f.write(string)
+
 # Create the scripts for ABT
 for i in xrange(1, numConvarianceSteps + 1):
     for j in xrange(1, numConvarianceSteps + 1):
@@ -69,38 +110,6 @@ for i in xrange(1, numConvarianceSteps + 1):
 	    if (os.path.exists(folder + "/" + str(i) + "_proc_" + str(j) + "_obs" + "/jobs_abt_" + robot + "_" + str(k) + ".sh")):
 		os.remove(folder + "/" + str(i) + "_proc_" + str(j) + "_obs" + "/jobs_abt_" + robot + "_" + str(k) + ".sh")
 	    with open(folder + "/" + str(i) + "_proc_" + str(j) + "_obs" + "/jobs_abt_" + robot + "_" + str(k) + ".sh", 'a+') as f:
-		f.write(string)
-		
-# Create the scripts for MHFR
-for i in xrange(1, numConvarianceSteps + 1):
-    for j in xrange(1, numConvarianceSteps + 1):
-	folder2 = str(i) + "_proc_" + str(j) + "_obs"
-	for k in xrange(0, numRuns/numParallelJobs):	    
-	    string = "#!/bin/sh \n"
-	    string += "# \n"
-	    string += "#SBATCH --job-name=" + str(numObstacles)
-	    string += robot + "MHFR \n"
-	    string += "#SBATCH --array="
-	    string += str(k * numParallelJobs) + "-" + str(k * numParallelJobs + numParallelJobs-1) + " \n"
-	    string += "#SBATCH --time=00:20:00 \n"
-	    string += "#SBATCH --nodes=1 \n"
-	    string += "#SBATCH --ntasks=1 \n"
-	    string += "#SBATCH --cpus-per-task=8 \n"
-	    string += "#SBATCH --mem=" + memory + " \n"
-	    string += "#SBATCH --mail-type=NONE \n"
-	    string += "#SBATCH --mail-user=hoergems@gmail.com \n"
-	    string += "source /home/hoe01h/.bash_profile \n"
-	    string += "gzMasterUriPort=`expr 11345 + $SLURM_ARRAY_TASK_ID` \n"
-	    string += "echo $gzMasterUriPort \n"
-	    string += "export GAZEBO_MASTER_URI=http://localhost:$gzMasterUriPort \n"
-	    string += "cd /data/hoe01h/oppt_devel/bin \n"
-	    string += "./mhfr --cfg " + configFolder + robot + "/cfg/" + folder2 
-	    string += "/" + robot + "_$SLURM_ARRAY_TASK_ID.cfg \n" 
-	    if not os.path.exists(folder + "/" + str(i) + "_proc_" + str(j) + "_obs"):
-		os.makedirs(folder + "/" + str(i) + "_proc_" + str(j) + "_obs")
-	    if (os.path.exists(folder + "/" + str(i) + "_proc_" + str(j) + "_obs" + "/jobs_mfhr_" + robot + "_" + str(k) + ".sh")):
-		os.remove(folder + "/" + str(i) + "_proc_" + str(j) + "_obs" + "/jobs_mhfr_" + robot + "_" + str(k) + ".sh")
-	    with open(folder + "/" + str(i) + "_proc_" + str(j) + "_obs" + "/jobs_mhfr_" + robot + "_" + str(k) + ".sh", 'a+') as f:
 		f.write(string)
 		
 shutil.copyfile("run.sh", folder + "/run.sh")
