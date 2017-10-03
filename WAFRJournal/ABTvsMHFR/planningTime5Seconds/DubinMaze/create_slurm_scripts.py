@@ -59,16 +59,7 @@ for i in xrange(1, numConvarianceSteps + 1):
 	    string += "#SBATCH --mail-type=NONE \n"
 	    string += "#SBATCH --mail-user=hoergems@gmail.com \n"
 	    string += "source /home/hoe01h/.bash_profile \n"
-
-            # Find out how many ports we need
-            cfgFile = configFolder + robot + "/cfg/" + folder2 + "/" + robot + "_0.cfg"
-            nThreads = 1                      
-            with open(cfgFile, 'r') as cfFile:
-                for line in cfFile.readlines():
-                   if "numThreads" in line:
-                       nThreads = int(line.split("=")[1].strip()) + 2
-            
-            string += "gzMasterUriPort=`expr 11345 + " + str(nThreads) + " \\\* $SLURM_ARRAY_TASK_ID` \n"            
+            string += "gzMasterUriPort=`expr 11345 + $SLURM_ARRAY_TASK_ID` \n"           
 	    string += "echo $gzMasterUriPort \n"
 	    string += "export GAZEBO_MASTER_URI=http://localhost:$gzMasterUriPort \n"
 	    string += "cd /data/hoe01h/oppt_devel/bin \n"
