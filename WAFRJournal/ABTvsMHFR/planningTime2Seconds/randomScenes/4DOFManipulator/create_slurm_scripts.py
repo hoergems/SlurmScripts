@@ -55,13 +55,13 @@ for k in xrange(0, numRuns/numParallelJobs):
     string += "#SBATCH --mail-type=NONE \n"
     string += "#SBATCH --mail-user=hoergems@gmail.com \n"
     string += "source /home/hoe01h/.bash_profile \n"
-    string += "source /data/hoe01h/gazebo_models/setup.sh \n"
+    string += "export OPPT_RESOURCE_PATH=${OPPT_RESOURCE_PATH}:/data/hoe01h/gazebo_models/models/randomScenes/4DOF \n"
     string += "gzMasterUriPort=`expr 11345 + $SLURM_ARRAY_TASK_ID` \n"
     string += "echo $gzMasterUriPort \n"
     string += "export GAZEBO_MASTER_URI=http://localhost:$gzMasterUriPort \n"
-    string += "cd /data/hoe01h/tapir_devel/bin \n"
+    string += "cd /data/hoe01h/oppt_devel/bin \n"
     ff = configFolder + robot + "/cfg/" + str(numObstacles) + "_obstacles/" + robot + "_$SLURM_ARRAY_TASK_ID.cfg"
-    string += "./abt_robot --cfg " + ff + " \n"    
+    string += "./abt --cfg " + ff + " \n"    
     print folder
     if not os.path.exists(folder):
 	os.makedirs(folder)
@@ -87,10 +87,10 @@ for k in xrange(0, numRuns/numParallelJobs):
     string += "source /data/hoe01h/gazebo_models/setup.sh \n"
     string += "gzMasterUriPort=`expr 11345 + $SLURM_ARRAY_TASK_ID` \n"
     string += "echo $gzMasterUriPort \n"
-    string += "export GAZEBO_MASTER_URI=http://localhost:$gzMasterUriPort \n"
-    string += "cd /data/hoe01h/tapir_devel/bin \n"
+    string += "export OPPT_RESOURCE_PATH=${OPPT_RESOURCE_PATH}:/data/hoe01h/gazebo_models/models/randomScenes/4DOF \n"
+    string += "cd /data/hoe01h/oppt_devel/bin \n"
     ff = configFolder + robot + "/cfg/" + str(numObstacles) + "_obstacles/" + robot + "_$SLURM_ARRAY_TASK_ID.cfg"
-    string += "./mhfr_robot --cfg " + ff + " \n"    
+    string += "./mhfr --cfg " + ff + " \n"    
     print folder
     if not os.path.exists(folder):
 	os.makedirs(folder)
