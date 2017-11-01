@@ -91,8 +91,9 @@ for k in xrange(0, numRuns/numParallelJobs):
     string += "export OPPT_RESOURCE_PATH=${OPPT_RESOURCE_PATH}:/data/hoe01h/gazebo_models/models/randomScenes/4DOF \n"
     string += "export GAZEBO_MODEL_PATH=${GAZEBO_MODEL_PATH}:/data/hoe01h/gazebo_models/models/randomScenes/4DOF \n"
     string += "cd /data/hoe01h/oppt_devel/bin \n"
-    ff = configFolder + robot + "/cfg/" + str(numObstacles) + "_obstacles/" + robot + "_$SLURM_ARRAY_TASK_ID.cfg"
-    string += "./mhfr --cfg " + ff + " \n"    
+    ff = configFolder + robot + "/cfg/" + str(numObstacles) + "_obstacles/" + robot + "_$SLURM_ARRAY_TASK_ID.cfg"    
+    string += "gdb -q -batch -ex run -ex backtace ./mhfr --args ./mhfr --cfg " + ff + " \n"
+    #string += "./mhfr --cfg " + ff + " \n"    
     print folder
     if not os.path.exists(folder):
 	os.makedirs(folder)
