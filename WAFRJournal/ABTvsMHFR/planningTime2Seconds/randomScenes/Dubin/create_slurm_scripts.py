@@ -59,9 +59,11 @@ for k in xrange(0, numRuns/numParallelJobs):
     string += "gzMasterUriPort=`expr 11345 + $SLURM_ARRAY_TASK_ID` \n"
     string += "echo $gzMasterUriPort \n"
     string += "export GAZEBO_MASTER_URI=http://localhost:$gzMasterUriPort \n"
-    string += "cd /data/hoe01h/tapir_devel/bin \n"
+    string += "export OPPT_RESOURCE_PATH=${OPPT_RESOURCE_PATH}:/data/hoe01h/gazebo_models/models/randomScenes/Dubin \n"
+    string += "export GAZEBO_MODEL_PATH=${GAZEBO_MODEL_PATH}:/data/hoe01h/gazebo_models/models/randomScenes/Dubin \n"
+    string += "cd /data/hoe01h/oppt_devel/bin \n"
     ff = configFolder + robot + "/cfg/" + str(numObstacles) + "_obstacles/" + robot + "_$SLURM_ARRAY_TASK_ID.cfg"
-    string += "./abt_robot --cfg " + ff + " \n"    
+    string += "./abt --cfg " + ff + " \n"    
     print folder
     if not os.path.exists(folder):
 	os.makedirs(folder)
@@ -88,9 +90,11 @@ for k in xrange(0, numRuns/numParallelJobs):
     string += "gzMasterUriPort=`expr 11345 + $SLURM_ARRAY_TASK_ID` \n"
     string += "echo $gzMasterUriPort \n"
     string += "export GAZEBO_MASTER_URI=http://localhost:$gzMasterUriPort \n"
-    string += "cd /data/hoe01h/tapir_devel/bin \n"
+    string += "export OPPT_RESOURCE_PATH=${OPPT_RESOURCE_PATH}:/data/hoe01h/gazebo_models/models/randomScenes/Dubin \n"
+    string += "export GAZEBO_MODEL_PATH=${GAZEBO_MODEL_PATH}:/data/hoe01h/gazebo_models/models/randomScenes/Dubin \n"
+    string += "cd /data/hoe01h/oppt_devel/bin \n"
     ff = configFolder + robot + "/cfg/" + str(numObstacles) + "_obstacles/" + robot + "_$SLURM_ARRAY_TASK_ID.cfg"
-    string += "./mhfr_robot --cfg " + ff + " \n"    
+    string += "./mhfr --cfg " + ff + " \n"    
     print folder
     if not os.path.exists(folder):
 	os.makedirs(folder)
