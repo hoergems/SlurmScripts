@@ -18,6 +18,7 @@ parser.add_argument('-nr', '--numRuns', type=int, default=100,
 parser.add_argument('-r', '--robotProblem', type=str, default="Dubin", help="The robot problem")
 parser.add_argument('-m', '--memory', type=str, default="4096", help="The amout of memory requested per job")
 parser.add_argument('-cf', '--configFolder', type=str, required=True, help="Path where the config files are stored in")
+parser.add_argument('-t', '--time', type=int, required=True, help="The maximum execution time in minutes")
 
 args = parser.parse_args()
 
@@ -32,6 +33,7 @@ if (configFolder.strip()[-1] != "/"):
 
 robot = args.robotProblem
 robotExec = "robot"
+time = args.time
 
 shared_path = os.path.dirname(os.path.abspath(__file__))
 
@@ -51,6 +53,7 @@ for i in xrange(1, numConvarianceSteps + 1):
 	    string += robot + "calcMeasureSamples \n"
 	    string += "#SBATCH --array="
 	    string += str(k * numParallelJobs) + "-" + str(k * numParallelJobs + numParallelJobs-1) + " \n"
+	    string += "#SBATCH --time=00:" + str(time) + ":00 \n"
 	    string += "#SBATCH --time=00:30:00 \n"
 	    string += "#SBATCH --nodes=1 \n"
 	    string += "#SBATCH --ntasks=1 \n"
