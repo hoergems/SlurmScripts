@@ -19,6 +19,7 @@ parser.add_argument('-r', '--robotProblem', type=str, default="Dubin", help="The
 parser.add_argument('-m', '--memory', type=str, default="4096", help="The amout of memory requested per job")
 parser.add_argument('-cf', '--configFolder', type=str, required=True, help="Path where the config files are stored in")
 parser.add_argument('-t', '--time', type=int, required=True, help="The maximum execution time in minutes")
+parser.add_argument('-a', '--algorithm', type=str, required=True, help="The algorithm (executable name) to execute")
 
 args = parser.parse_args()
 
@@ -34,6 +35,7 @@ if (configFolder.strip()[-1] != "/"):
 robot = args.robotProblem
 robotExec = "robot"
 time = args.time
+algorithm = args.algorithm
 
 shared_path = os.path.dirname(os.path.abspath(__file__))
 
@@ -66,13 +68,13 @@ for i in xrange(1, numConvarianceSteps + 1):
 	    string += "export GAZEBO_MASTER_URI=http://localhost:$gzMasterUriPort \n"
 	    string += "export OPPT_RESOURCE_PATH=$OPPT_RESOURCE_PATH:/data/hoe01h/oppt_devel/files/trajectorySamplesKukaTable \n"
 	    string += "cd /data/hoe01h/oppt_devel/bin \n"
-	    string += "./calcMeasureSamplesServer --cfg " + configFolder + robot + "/cfg/" + folder2 
+	    string += "./" + algorithm + " --cfg " + configFolder + robot + "/cfg/" + folder2	    
 	    string += "/" + robot + "_$SLURM_ARRAY_TASK_ID.cfg \n" 
 	    if not os.path.exists(folder + "/" + str(i) + "_proc_" + str(j) + "_obs"):
 		os.makedirs(folder + "/" + str(i) + "_proc_" + str(j) + "_obs")
-	    if (os.path.exists(folder + "/" + str(i) + "_proc_" + str(j) + "_obs" + "/jobs_mfhr_" + robot + "_" + str(k) + ".sh")):
-		os.remove(folder + "/" + str(i) + "_proc_" + str(j) + "_obs" + "/jobs_mhfr_" + robot + "_" + str(k) + ".sh")
-	    with open(folder + "/" + str(i) + "_proc_" + str(j) + "_obs" + "/jobs_mhfr_" + robot + "_" + str(k) + ".sh", 'a+') as f:
+	    if (os.path.exists(folder + "/" + str(i) + "_proc_" + str(j) + "_obs" + "/jobs_" + algorithm + "_" + robot + "_" + str(k)+ ".sh")):
+		os.remove(folder + "/" + str(i) + "_proc_" + str(j) + "_obs" + "/jobs_" + algorithm + "_" + robot + "_" + str(k) + ".sh")
+	    with open(folder + "/" + str(i) + "_proc_" + str(j) + "_obs" + "/jobs_" + algorithm + "_" + robot + "_" + str(k) + ".sh", 'a+') as f:
 		f.write(string)
 		
 shutil.copyfile("run.sh", folder + "/run.sh")
