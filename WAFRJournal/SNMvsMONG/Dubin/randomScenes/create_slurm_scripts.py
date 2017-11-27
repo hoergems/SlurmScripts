@@ -68,10 +68,14 @@ for i in xrange(1, numConvarianceSteps + 1):
             string += "export GAZEBO_MASTER_URI=http://localhost:$gzMasterUriPort \n"
             string += "export OPPT_RESOURCE_PATH=$OPPT_RESOURCE_PATH:/data/hoe01h/oppt_devel/files/:/data/hoe01h/gazebo_models/models/randomScenes/" + robot + " \n"	    
             string += "cd /data/hoe01h/oppt_devel/bin \n"
-            #string += "./genTrajectorySamples" + " --cfg " + configFolder + "cfg/" + folder2	    
-            #string += "/" + robot + "_$SLURM_ARRAY_TASK_ID.cfg \n" 
-            string += "./calcMeasureSamples" + " --cfg " + configFolder + "cfg/" + folder2	    
-            string += "/" + robot + "_$SLURM_ARRAY_TASK_ID.cfg \n" 
+            if algorithm == "snm":		
+		string += "./genTrajectorySamples" + " --cfg " + configFolder + "cfg/" + folder2	    
+		string += "/" + robot + "_$SLURM_ARRAY_TASK_ID.cfg \n" 
+		string += "./calcMeasureSamples" + " --cfg " + configFolder + "cfg/" + folder2	    
+		string += "/" + robot + "_$SLURM_ARRAY_TASK_ID.cfg \n"
+	    else:
+		string += "./" + algorithm + " --cfg " + configFolder + "cfg/" + folder2	    
+		string += "/" + robot + "_$SLURM_ARRAY_TASK_ID.cfg \n" 
             if not os.path.exists(folder + "/" + str(i) + "_proc_" + str(j) + "_obs"):
                 os.makedirs(folder + "/" + str(i) + "_proc_" + str(j) + "_obs")
             if (os.path.exists(folder + "/" + str(i) + "_proc_" + str(j) + "_obs" + "/jobs_" + algorithm + "_" + robot + "_" + str(k)+ ".sh")):
