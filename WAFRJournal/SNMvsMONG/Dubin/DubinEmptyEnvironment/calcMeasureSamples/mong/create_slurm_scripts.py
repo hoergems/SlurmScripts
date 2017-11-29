@@ -45,40 +45,39 @@ if os.path.isdir(folder):
 os.makedirs(folder)
 		
 # Create the scripts for MHFR
-for i in xrange(1, numConvarianceSteps + 1):
-    for j in xrange(1, numConvarianceSteps + 1):
-        folder2 = str(numObstacles) + "Obstacles/" + str(i) + "_proc_" + str(j) + "_obs"
-        for k in xrange(0, numRuns/numParallelJobs):	    
-            string = "#!/bin/sh \n"
-            string += "# \n"
-            string += "#SBATCH --job-name=" + str(numObstacles)
-            string += robot + "calcMeasureSamples \n"
-            string += "#SBATCH --array="
-            string += str(k * numParallelJobs) + "-" + str(k * numParallelJobs + numParallelJobs-1) + " \n"
-            if algorithm == "calcMeasureSamples":
-		string += "#SBATCH --time=02:" + str(time) + ":00 \n"
-	    else:
-		string += "#SBATCH --time=00:" + str(time) + ":00 \n"
-            string += "#SBATCH --nodes=1 \n"
-            string += "#SBATCH --ntasks=1 \n"
-            string += "#SBATCH --cpus-per-task=8 \n"
-            string += "#SBATCH --mem=" + memory + " \n"
-            string += "#SBATCH --mail-type=NONE \n"
-            string += "#SBATCH --mail-user=hoergems@gmail.com \n"
-            string += "source /home/hoe01h/.bash_profile \n"
-            string += "gzMasterUriPort=`expr 11345 + $SLURM_ARRAY_TASK_ID` \n"
-            string += "echo $gzMasterUriPort \n"
-            string += "export GAZEBO_MASTER_URI=http://localhost:$gzMasterUriPort \n"
-            string += "export OPPT_RESOURCE_PATH=$OPPT_RESOURCE_PATH:/data/hoe01h/oppt_devel/files/:/data/hoe01h/gazebo_models/models/randomScenes/4DOF/ \n"	    
-            string += "cd /data/hoe01h/oppt_devel/bin \n"            
-	    string += "./" + algorithm + " --cfg " + configFolder + "cfg/" + folder2	    
-	    string += "/" + robot + "_$SLURM_ARRAY_TASK_ID.cfg \n"
-            if not os.path.exists(folder + "/" + str(i) + "_proc_" + str(j) + "_obs"):
-                os.makedirs(folder + "/" + str(i) + "_proc_" + str(j) + "_obs")
-            if (os.path.exists(folder + "/" + str(i) + "_proc_" + str(j) + "_obs" + "/jobs_" + algorithm + "_" + robot + "_" + str(k)+ ".sh")):
-                os.remove(folder + "/" + str(i) + "_proc_" + str(j) + "_obs" + "/jobs_" + algorithm + "_" + robot + "_" + str(k) + ".sh")
-            with open(folder + "/" + str(i) + "_proc_" + str(j) + "_obs" + "/jobs_" + algorithm + "_" + robot + "_" + str(k) + ".sh", 'a+') as f:
-                f.write(string)
+for i in xrange(1, numConvarianceSteps + 1):    
+    folder2 = str(numObstacles) + "Obstacles/" + str(i) + "_proc_" + str(i) + "_obs"
+    for k in xrange(0, numRuns/numParallelJobs):	    
+	string = "#!/bin/sh \n"
+	string += "# \n"
+	string += "#SBATCH --job-name=" + str(numObstacles)
+	string += robot + "calcMeasureSamples \n"
+	string += "#SBATCH --array="
+	string += str(k * numParallelJobs) + "-" + str(k * numParallelJobs + numParallelJobs-1) + " \n"
+	if algorithm == "calcMeasureSamples":
+	    string += "#SBATCH --time=02:" + str(time) + ":00 \n"
+	else:
+	    string += "#SBATCH --time=00:" + str(time) + ":00 \n"
+	string += "#SBATCH --nodes=1 \n"
+	string += "#SBATCH --ntasks=1 \n"
+	string += "#SBATCH --cpus-per-task=8 \n"
+	string += "#SBATCH --mem=" + memory + " \n"
+	string += "#SBATCH --mail-type=NONE \n"
+	string += "#SBATCH --mail-user=hoergems@gmail.com \n"
+	string += "source /home/hoe01h/.bash_profile \n"
+	string += "gzMasterUriPort=`expr 11345 + $SLURM_ARRAY_TASK_ID` \n"
+	string += "echo $gzMasterUriPort \n"
+	string += "export GAZEBO_MASTER_URI=http://localhost:$gzMasterUriPort \n"
+	string += "export OPPT_RESOURCE_PATH=$OPPT_RESOURCE_PATH:/data/hoe01h/oppt_devel/files/:/data/hoe01h/gazebo_models/models/randomScenes/4DOF/ \n"	    
+	string += "cd /data/hoe01h/oppt_devel/bin \n"            
+	string += "./" + algorithm + " --cfg " + configFolder + "cfg/" + folder2	    
+	string += "/" + robot + "_$SLURM_ARRAY_TASK_ID.cfg \n"
+	if not os.path.exists(folder + "/" + str(i) + "_proc_" + str(i) + "_obs"):
+	    os.makedirs(folder + "/" + str(i) + "_proc_" + str(i) + "_obs")
+	if (os.path.exists(folder + "/" + str(i) + "_proc_" + str(i) + "_obs" + "/jobs_" + algorithm + "_" + robot + "_" + str(k)+ ".sh")):
+	    os.remove(folder + "/" + str(i) + "_proc_" + str(i) + "_obs" + "/jobs_" + algorithm + "_" + robot + "_" + str(k) + ".sh")
+	with open(folder + "/" + str(i) + "_proc_" + str(i) + "_obs" + "/jobs_" + algorithm + "_" + robot + "_" + str(k) + ".sh", 'a+') as f:
+	    f.write(string)
 		
 shutil.copyfile("run.sh", folder + "/run.sh")
 os.system("chmod +x " + folder + "/run.sh")
