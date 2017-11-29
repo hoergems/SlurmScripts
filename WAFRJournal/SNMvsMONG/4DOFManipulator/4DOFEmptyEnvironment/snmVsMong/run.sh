@@ -45,11 +45,9 @@ algorithm=$4
 echo "START INDEX $start_index"
 
 for (( i=$start_index; i < $endIndex; i++ ))
-do
-  for (( j=$start_index; j < $endIndex; j++ ))  
-	  do
-	  echo "idx: $i, $j"
-	  folder=${i}_proc_${j}_obs
+do  
+	  echo "idx: $i, $i"
+	  folder=${i}_proc_${i}_obs
 	  cd ${folder}
 	  for ((a=0; a < 5; a++))
 	  do
@@ -67,5 +65,5 @@ do
 		sleep 0.1
 	  done
 	  cd ..
-   done
+   
 done
