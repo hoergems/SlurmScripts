@@ -64,6 +64,5 @@ do
 		echo "jobID: ${jid}"
 		sleep 0.1
 	  done
-	  cd ..
-   done
+	  cd ..   
 done
