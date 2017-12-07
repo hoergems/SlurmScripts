@@ -31,7 +31,7 @@ memory = args.memory
 configFolder = args.configFolder
 alg = args.alg
 cpus_per_task = 1
-if alg == "MHFR":
+if alg == "mhfr":
     cpus_per_task = 8
     
 time = args.time
