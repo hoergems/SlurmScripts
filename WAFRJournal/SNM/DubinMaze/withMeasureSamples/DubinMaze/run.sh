@@ -45,8 +45,7 @@ algorithm=$4
 echo "START INDEX $start_index"
 
 for (( i=$start_index; i < $endIndex; i++ ))
-do  
-	  do
+do  	 
 	  echo "idx: $i, $j"
 	  folder=${i}_proc_${i}_obs
 	  cd ${folder}
