@@ -68,7 +68,8 @@ for i in xrange(1, numConvarianceSteps + 1):
 	    string += "gzMasterUriPort=`expr 11345 + $SLURM_ARRAY_TASK_ID` \n"
 	    string += "echo $gzMasterUriPort \n"
 	    string += "export GAZEBO_MASTER_URI=http://localhost:$gzMasterUriPort \n"
-	    string += "export OPPT_RESOURCE_PATH=$OPPT_RESOURCE_PATH:/data/hoe01h/oppt_devel/files/ \n"	    
+	    string += "export OPPT_RESOURCE_PATH=$OPPT_RESOURCE_PATH:/data/hoe01h/oppt_devel/files/ \n"	 
+            string += "export OPPT_RESOURCE_PATH=$OPPT_RESOURCE_PATH:/data/hoe01h/gazebo_models/models/randomScenes/Dubin"              
 	    string += "cd /data/hoe01h/oppt_devel/bin \n"
             if not algorithm1 == "":
                 string += "./" + algorithm1 + " --cfg " + configFolder + robot + "/cfg/" + folder2
