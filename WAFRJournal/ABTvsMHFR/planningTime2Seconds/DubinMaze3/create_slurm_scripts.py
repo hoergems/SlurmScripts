@@ -54,8 +54,8 @@ for i in xrange(1, numConvarianceSteps + 1):
 	for k in xrange(0, numRuns/numParallelJobs):	    
 	    string = "#!/bin/sh \n"
 	    string += "# \n"
-	    string += "#SBATCH --job-name=" + str(numObstacles)
-	    string += robot + "ABT \n"
+	    string += "#SBATCH --job-name="
+	    string += robot + alg + " \n"
 	    string += "#SBATCH --array="
 	    string += str(k * numParallelJobs) + "-" + str(k * numParallelJobs + numParallelJobs-1) + " \n"
             string += "#SBATCH --time=00:" + str(time) + ":00 \n"	    
