@@ -45,8 +45,8 @@ if os.path.isdir(folder):
 os.makedirs(folder)
 		
 # Create the scripts for MHFR
-for i in xrange(1, numConvarianceSteps + 1):
-    for j in xrange(1, numConvarianceSteps + 1):
+for i in xrange(1, numConvarianceSteps + 1):    
+	j=i
 	folder2 = str(i) + "_proc_" + str(j) + "_obs"
 	for k in xrange(0, numRuns/numParallelJobs):	    
 	    string = "#!/bin/sh \n"
