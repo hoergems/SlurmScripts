@@ -19,7 +19,8 @@ parser.add_argument('-r', '--robotProblem', type=str, default="Dubin", help="The
 parser.add_argument('-m', '--memory', type=str, default="4096", help="The amout of memory requested per job")
 parser.add_argument('-cf', '--configFolder', type=str, required=True, help="Path where the config files are stored in")
 parser.add_argument('-t', '--time', type=int, required=True, help="The maximum execution time in minutes")
-parser.add_argument('-a', '--algorithm', type=str, required=True, help="The algorithm (executable name) to execute")
+parser.add_argument('-a1', '--algorithm1', type=str, required=False, help="The algorithm (executable name) to execute", default="")
+parser.add_argument('-a2', '--algorithm2', type=str, required=True, help="The algorithm (executable name) to execute")
 
 args = parser.parse_args()
 
@@ -35,7 +36,8 @@ if (configFolder.strip()[-1] != "/"):
 robot = args.robotProblem
 robotExec = "robot"
 time = args.time
-algorithm = args.algorithm
+algorithm1 = args.algorithm1
+algorithm2 = args.algorithm2
 
 shared_path = os.path.dirname(os.path.abspath(__file__))
 
@@ -47,7 +49,7 @@ os.makedirs(folder)
 # Create the scripts for MHFR
 for i in xrange(1, numConvarianceSteps + 1):    
 	j=i
-	folder2 = str(i) + "_proc_" + str(j) + "_obs"
+	folder2 = str(numObstacles) + "obstacles" + "/" + str(i) + "_proc_" + str(j) + "_obs"
 	for k in xrange(0, numRuns/numParallelJobs):	    
 	    string = "#!/bin/sh \n"
 	    string += "# \n"
@@ -66,15 +68,19 @@ for i in xrange(1, numConvarianceSteps + 1):
 	    string += "gzMasterUriPort=`expr 11345 + $SLURM_ARRAY_TASK_ID` \n"
 	    string += "echo $gzMasterUriPort \n"
 	    string += "export GAZEBO_MASTER_URI=http://localhost:$gzMasterUriPort \n"
-	    string += "export OPPT_RESOURCE_PATH=$OPPT_RESOURCE_PATH:/data/hoe01h/oppt_devel/files/ \n"	    
+	    string += "export OPPT_RESOURCE_PATH=$OPPT_RESOURCE_PATH:/data/hoe01h/oppt_devel/files/ \n"	 
+            string += "export OPPT_RESOURCE_PATH=$OPPT_RESOURCE_PATH:/data/hoe01h/gazebo_models/models/randomScenes/4DOF \n"              
 	    string += "cd /data/hoe01h/oppt_devel/bin \n"
-	    string += "./" + algorithm + " --cfg " + configFolder + robot + "/cfg/" + folder2	    
+            if not algorithm1 == "":
+                string += "./" + algorithm1 + " --cfg " + configFolder + robot + "/cfg/" + folder2
+                string += "/" + robot + "_$SLURM_ARRAY_TASK_ID.cfg \n" 	  
+	    string += "./" + algorithm2 + " --cfg " + configFolder + robot + "/cfg/" + folder2	    
 	    string += "/" + robot + "_$SLURM_ARRAY_TASK_ID.cfg \n" 
 	    if not os.path.exists(folder + "/" + str(i) + "_proc_" + str(j) + "_obs"):
 		os.makedirs(folder + "/" + str(i) + "_proc_" + str(j) + "_obs")
-	    if (os.path.exists(folder + "/" + str(i) + "_proc_" + str(j) + "_obs" + "/jobs_" + algorithm + "_" + robot + "_" + str(k)+ ".sh")):
-		os.remove(folder + "/" + str(i) + "_proc_" + str(j) + "_obs" + "/jobs_" + algorithm + "_" + robot + "_" + str(k) + ".sh")
-	    with open(folder + "/" + str(i) + "_proc_" + str(j) + "_obs" + "/jobs_" + algorithm + "_" + robot + "_" + str(k) + ".sh", 'a+') as f:
+	    if (os.path.exists(folder + "/" + str(i) + "_proc_" + str(j) + "_obs" + "/jobs_" + algorithm2 + "_" + robot + "_" + str(k)+ ".sh")):
+		os.remove(folder + "/" + str(i) + "_proc_" + str(j) + "_obs" + "/jobs_" + algorithm2 + "_" + robot + "_" + str(k) + ".sh")
+	    with open(folder + "/" + str(i) + "_proc_" + str(j) + "_obs" + "/jobs_" + algorithm2 + "_" + robot + "_" + str(k) + ".sh", 'a+') as f:
 		f.write(string)
 		
 shutil.copyfile("run.sh", folder + "/run.sh")
