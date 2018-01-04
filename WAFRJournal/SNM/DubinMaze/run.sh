@@ -45,11 +45,9 @@ algorithm=$4
 echo "START INDEX $start_index"
 
 for (( i=$start_index; i < $endIndex; i++ ))
-do
-  for (( j=$start_index; j < $endIndex; j++ ))  
-	  do
+do  	 
 	  echo "idx: $i, $j"
-	  folder=${i}_proc_${j}_obs
+	  folder=${i}_proc_${i}_obs
 	  cd ${folder}
 	  for ((a=0; a < 5; a++))
 	  do
@@ -60,12 +58,11 @@ do
 		  output=$(sbatch jobs_${algorithm}_${robot}_${a}.sh)      
 		else
 		  echo "Exec jobs_${algorithm}_${robot}_${a}.sh"
-		  output=$(sbatch --dependency=afterany:$jid jobs_${algorithm}_${robot}_${a}.sh)		  
+		  output=$(sbatch --dependency=afterany:$jid jobs_${algorithm}_${robot}_${a}.sh)
 		fi
 		jid=$(echo $output | tr -cd '[[:digit:]]')
 		echo "jobID: ${jid}"
 		sleep 0.1
 	  done
-	  cd ..
-   done
+	  cd ..  
 done
