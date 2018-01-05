@@ -60,7 +60,7 @@ do
 		  output=$(sbatch jobs_${algorithm}_${robot}_${a}.sh)      
 		else
 		  echo "Exec jobs_${algorithm}_${robot}_${a}.sh"
-		  output=$(sbatch --dependency=afterany:$jid jobs_${algorithm}_${robot}_${a}.sh)
+		  output=$(sbatch jobs_${algorithm}_${robot}_${a}.sh)
 		fi
 		jid=$(echo $output | tr -cd '[[:digit:]]')
 		echo "jobID: ${jid}"
