@@ -18,7 +18,8 @@ parser.add_argument('-nr', '--numRuns', type=int, default=100,
 parser.add_argument('-r', '--robotProblem', type=str, default="Dubin", help="The robot problem")
 parser.add_argument('-m', '--memory', type=str, default="4096", help="The amout of memory requested per job")
 parser.add_argument('-cf', '--configFolder', type=str, required=True, help="Path where the config files are stored in")
-parser.add_argument('-t', '--time', type=int, required=True, help="The maximum execution time in minutes")
+parser.add_argument('-tH', '--timeHours', type=int, required=True, help="The maximum execution time in hours")
+parser.add_argument('-tM', '--timeMinutes', type=int, required=True, help="The maximum execution time in minutes")
 parser.add_argument('-a1', '--algorithm1', type=str, required=False, help="The algorithm (executable name) to execute", default="")
 parser.add_argument('-a2', '--algorithm2', type=str, required=True, help="The algorithm (executable name) to execute")
 
@@ -35,7 +36,12 @@ if (configFolder.strip()[-1] != "/"):
 
 robot = args.robotProblem
 robotExec = "robot"
-time = args.time
+timeHours = str(args.timeHours)
+timeMinutes = str(args.timeMinutes)
+if len(timeMinutes) == 1:
+    timeMinutes = "0" + timeMinutes
+if len(timeHours) == 1:
+    timeHours = "0" + timeHours
 algorithm1 = args.algorithm1
 algorithm2 = args.algorithm2
 
@@ -57,7 +63,7 @@ for i in xrange(1, numConvarianceSteps + 1):
 	    string += robot + "calcMeasureSamples \n"
 	    string += "#SBATCH --array="
 	    string += str(k * numParallelJobs) + "-" + str(k * numParallelJobs + numParallelJobs-1) + " \n"
-	    string += "#SBATCH --time=03:" + str(time) + ":00 \n"	    
+	    string += "#SBATCH --time=" timeHours + ":" + timeMinutes + ":00 \n"	        
 	    string += "#SBATCH --nodes=1 \n"
 	    string += "#SBATCH --ntasks=1 \n"
 	    string += "#SBATCH --cpus-per-task=8 \n"
