@@ -63,7 +63,7 @@ for i in xrange(1, numConvarianceSteps + 1):
 	    string += robot + "calcMeasureSamples \n"
 	    string += "#SBATCH --array="
 	    string += str(k * numParallelJobs) + "-" + str(k * numParallelJobs + numParallelJobs-1) + " \n"
-	    string += "#SBATCH --time=" timeHours + ":" + timeMinutes + ":00 \n"	        
+	    string += "#SBATCH --time=" + timeHours + ":" + timeMinutes + ":00 \n"	        
 	    string += "#SBATCH --nodes=1 \n"
 	    string += "#SBATCH --ntasks=1 \n"
 	    string += "#SBATCH --cpus-per-task=8 \n"
