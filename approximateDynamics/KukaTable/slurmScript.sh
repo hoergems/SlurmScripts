@@ -1,7 +1,7 @@
 #!/bin/sh 
 # 
 #SBATCH --job-name=calcHeuristicSamples
-#SBATCH --array=0-999 
+#SBATCH --array=0-1999 
 #SBATCH --time=00:25:00 
 #SBATCH --nodes=1 
 #SBATCH --ntasks=1 
