@@ -42,7 +42,7 @@ os.makedirs(folder)
 
 # Create the scripts for ABT
 for i in xrange(1, numConvarianceSteps + 1):    
-    folder2 = str(i) + "_proc_" + str(i) + "_obs"
+    folder2 = str(i) + "_dist"
     for k in xrange(0, numRuns/numParallelJobs):
     	string = "#!/bin/sh \n"
     	string += "# \n"
