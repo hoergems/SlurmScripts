@@ -75,7 +75,7 @@ shutil.copyfile("run.sh", folder + "/run.sh")
 os.system("chmod +x " + folder + "/run.sh")
 for line in fileinput.input(folder + "/run.sh", inplace=1):
 	if "endIndex=11" in line:
-		line = "endIndex=" + str(numConvarianceSteps + 1) + "\n"	
-    elif "for ((a=0;" in line:
+		line = "endIndex=" + str(numConvarianceSteps + 1) + "\n"
+	elif "for ((a=0;" in line:
     	line = "  for ((a=0; a < " + str(numRuns/numParallelJobs) + "; a++))\n"
     sys.stdout.write(line)
