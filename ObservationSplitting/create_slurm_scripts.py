@@ -64,11 +64,11 @@ for i in xrange(1, numConvarianceSteps + 1):
     	string += "cd /data/hoe01h/oppt_devel/bin \n"
     	string += "./abt --cfg " + configFolder + robot + "/cfg/" + folder2
     	string += "/" + robot + "_$SLURM_ARRAY_TASK_ID.cfg \n"	     
-    	if not os.path.exists(folder + "/" + str(i) + "_proc_" + str(j) + "_obs"):
-    		os.makedirs(folder + "/" + str(i) + "_proc_" + str(j) + "_obs")
-    	if (os.path.exists(folder + "/" + str(i) + "_proc_" + str(j) + "_obs" + "/jobs_abt_" + robot + "_" + str(k) + ".sh")):
-    		os.remove(folder + "/" + str(i) + "_proc_" + str(j) + "_obs" + "/jobs_abt_" + robot + "_" + str(k) + ".sh")
-    	with open(folder + "/" + str(i) + "_proc_" + str(j) + "_obs" + "/jobs_abt_" + robot + "_" + str(k) + ".sh", 'a+') as f:
+    	if not os.path.exists(folder + "/" + str(i) + "_proc_" + str(i) + "_obs"):
+    		os.makedirs(folder + "/" + str(i) + "_proc_" + str(i) + "_obs")
+    	if (os.path.exists(folder + "/" + str(i) + "_proc_" + str(i) + "_obs" + "/jobs_abt_" + robot + "_" + str(k) + ".sh")):
+    		os.remove(folder + "/" + str(i) + "_proc_" + str(i) + "_obs" + "/jobs_abt_" + robot + "_" + str(k) + ".sh")
+    	with open(folder + "/" + str(i) + "_proc_" + str(i) + "_obs" + "/jobs_abt_" + robot + "_" + str(k) + ".sh", 'a+') as f:
     		f.write(string)
 		
 shutil.copyfile("run.sh", folder + "/run.sh")
