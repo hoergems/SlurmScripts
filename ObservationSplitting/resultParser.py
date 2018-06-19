@@ -1,6 +1,12 @@
 import os.path
 import math
 
+distMin = 0.00001
+distMax = 1.0
+
+increment = (distMax - distMin) / 50.0
+dist = distMin
+
 for i in xrange(1, 51):
 	succRuns = 0
 	rewards = []
@@ -24,4 +30,5 @@ for i in xrange(1, 51):
 			innerSum += math.pow(rewards[k] - mean, 2)
 		stdd = 1.0 / (float(len(rewards))) * innerSum
 		stdd = math.sqrt(stdd)
-		print "i, " + str(i) + ", succRuns, " + str(succRuns) + ", r, " + str(mean) + ", " + str(stdd)
+		print "i, " + str(i) + ", dist, " + str(dist) + ", succRuns, " + str(succRuns) + ", r, " + str(mean) + ", " + str(stdd)
+	dist = dist + increment
