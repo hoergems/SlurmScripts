@@ -16,4 +16,10 @@ for i in xrange(1, 11):
 	for k in xrange(len(rewards)):
 		summ = summ + rewards[i]
 	mean = summ / float(len(rewards))
+	innerSum = 0.0
+	for k in xrange(len(rewards)):
+		innerSum += math.pow(rewards[i] - mean, 2)
+	stdd = 1.0 / (float(len(rewards))) * innerSum
+	stdd = math.sqrt(stdd)
 	print "succRuns: " + str(succRuns)
+	print "r: " + str(mean) + ", " + str(stdd)
