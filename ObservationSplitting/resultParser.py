@@ -9,4 +9,4 @@ for i in xrange(1, 11):
 					if "Num successful runs: 1":
 						succRuns = succRuns + 1
 				elif "Mean rewards:" in line:
-					print line.split(": ")[1]
+					print line.split(": ")[1].rstrip()
