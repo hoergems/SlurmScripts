@@ -6,7 +6,7 @@ for i in xrange(1, 51):
 	rewards = []
 	for j in xrange(50):
 		logFile = str(i) + "_dist/log_ABT_4DOFManipulator_" + str(j) + ".log", 'r'
-		if os.path.isfile(logfile):
+		if os.path.isfile(logFile):
 			with open(logFile, 'r') as f:
 				for line in f.readlines():
 					if "Num successful runs" in line:
