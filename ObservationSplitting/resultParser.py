@@ -4,7 +4,7 @@ import math
 distMin = 0.00001
 distMax = 1.0
 
-increment = (distMax - distMin) / 50.0
+increment = (distMax - distMin) / 49.0
 dist = distMin
 
 for i in xrange(1, 51):
