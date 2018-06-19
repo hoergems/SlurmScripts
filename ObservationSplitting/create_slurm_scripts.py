@@ -50,7 +50,7 @@ for i in xrange(1, numConvarianceSteps + 1):
     	string += robot + "ABT \n"
     	string += "#SBATCH --array="
     	string += str(k * numParallelJobs) + "-" + str(k * numParallelJobs + numParallelJobs-1) + " \n"
-    	string += "#SBATCH --time=00:20:00 \n"
+    	string += "#SBATCH --time=00:10:00 \n"
     	string += "#SBATCH --nodes=1 \n"
     	string += "#SBATCH --ntasks=1 \n"
     	string += "#SBATCH --mem=" + memory + " \n"
