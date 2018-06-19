@@ -23,4 +23,4 @@ for i in xrange(1, 51):
 		innerSum += math.pow(rewards[k] - mean, 2)
 	stdd = 1.0 / (float(len(rewards))) * innerSum
 	stdd = math.sqrt(stdd)
-	print "succRuns, " + str(succRuns) + ", r, " + str(mean) + ", " + str(stdd)
+	print "i, " + str(i) + ", succRuns, " + str(succRuns) + ", r, " + str(mean) + ", " + str(stdd)
