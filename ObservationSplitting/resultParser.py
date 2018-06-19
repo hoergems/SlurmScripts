@@ -5,7 +5,7 @@ for i in xrange(1, 51):
 	succRuns = 0
 	rewards = []
 	for j in xrange(50):
-		logFile = str(i) + "_dist/log_ABT_4DOFManipulator_" + str(j) + ".log", 'r'
+		logFile = str(i) + "_dist/log_ABT_4DOFManipulator_" + str(j) + ".log"
 		if os.path.isfile(logFile):
 			with open(logFile, 'r') as f:
 				for line in f.readlines():
