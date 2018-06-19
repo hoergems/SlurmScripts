@@ -1,5 +1,5 @@
 import os
-from scipy import stats
+import numpy as np
 
 for i in xrange(1, 11):
 	succRuns = 0
