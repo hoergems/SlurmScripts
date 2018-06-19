@@ -11,5 +11,5 @@ for i in xrange(1, 11):
 						succRuns = succRuns + 1
 				elif "Mean rewards:" in line:
 					rewards.append(float(line.split(": ")[1].rstrip()))
-    std = sqrt(2.0)
+	std = sqrt(2.0)
 	print "succRuns: " + str(succRuns)
