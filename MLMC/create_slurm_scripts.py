@@ -46,22 +46,21 @@ for k in xrange(0, numRuns/numParallelJobs):
 	string += "#SBATCH --nodes=1 \n"
 	string += "#SBATCH --ntasks=1 \n"
     string += "#SBATCH --cpus-per-task=4 \n"
-	string += "#SBATCH --mem=" + memory + " \n"
-	string += "#SBATCH --mail-type=NONE \n"
-	string += "#SBATCH --mail-user=hoergems@gmail.com \n"
-	string += "source /home/hoe01h/.bash_profile \n"
-	string += "source /data/hoe01h/usr/share/oppt/setup.sh \n"
-	string += "gzMasterUriPort=`expr 11345 + $SLURM_ARRAY_TASK_ID` \n"
-	string += "echo $gzMasterUriPort \n"
-	string += "export GAZEBO_MASTER_URI=http://localhost:$gzMasterUriPort \n"
-	string += "cd /data/hoe01h/oppt_devel/bin \n"
-	string += "./abt --cfg " + configFolder + robot + "/cfg"
-	string += "/" + robot + "_$SLURM_ARRAY_TASK_ID.cfg \n"
-	if (os.path.exists(folder + "/jobs_abt_" + robot + "_" + str(k) + ".sh")):
-		os.remove(folder + "/jobs_abt_" + robot + "_" + str(k) + ".sh")
-	with open(folder + "/jobs_abt_" + robot + "_" + str(k) + ".sh", 'a+') as f:
-		f.write(string)
-
+    string += "#SBATCH --mem=" + memory + " \n"
+    string += "#SBATCH --mail-type=NONE \n"
+    string += "#SBATCH --mail-user=hoergems@gmail.com \n"
+    string += "source /home/hoe01h/.bash_profile \n"
+    string += "source /data/hoe01h/usr/share/oppt/setup.sh \n"
+    string += "gzMasterUriPort=`expr 11345 + $SLURM_ARRAY_TASK_ID` \n"
+    string += "echo $gzMasterUriPort \n"
+    string += "export GAZEBO_MASTER_URI=http://localhost:$gzMasterUriPort \n"
+    string += "cd /data/hoe01h/oppt_devel/bin \n"
+    string += "./abt --cfg " + configFolder + robot + "/cfg"
+    string += "/" + robot + "_$SLURM_ARRAY_TASK_ID.cfg \n"
+    if (os.path.exists(folder + "/jobs_abt_" + robot + "_" + str(k) + ".sh")):
+        os.remove(folder + "/jobs_abt_" + robot + "_" + str(k) + ".sh")
+    with open(folder + "/jobs_abt_" + robot + "_" + str(k) + ".sh", 'a+') as f:
+        f.write(string)
 print "HELLO"
 
 print str(numRuns/numParallelJobs)
