@@ -14,12 +14,15 @@ parser.add_argument('-nr', '--numRuns', type=int, default=100,
 parser.add_argument('-r', '--robotProblem', type=str, default="Dubin", help="The robot problem")
 parser.add_argument('-m', '--memory', type=str, default="4096", help="The amout of memory requested per job")
 parser.add_argument('-cf', '--configFolder', type=str, required=True, help="Path where the config files are stored in")
+parser.add_argument('-t', '--time', type=int, default=5, help="Allocated time for each run")
+parser.add_argument('-cp', '--cpus', type=int, default=1, help="Number of cpu cores")
 
 args = parser.parse_args()
 
 numParallelJobs = args.numParallelJobs
 numRuns = args.numRuns
 memory = args.memory
+cpus = args.cpus
 configFolder = args.configFolder
 if (configFolder.strip()[-1] != "/"):
     configFolder += "/"
@@ -34,6 +37,25 @@ if os.path.isdir(folder):
     shutil.rmtree(folder)
 os.makedirs(folder)
 
+# Convert time string
+hours = 0
+minutes= args.time
+while minutes > 59:    
+    hours = hours + 1
+    minutes = minutes - 60
+
+timeString = ""
+if (hours < 10):
+    timeString += "0" + str(hours)
+else:
+    timeString += str(hours)
+timeString += ":"
+if (minutes < 10):
+    timeString += "0" + str(minutes)
+else:
+    timeString += str(minutes)
+timeString += ":00"
+
 # Create the scripts for ABT
 for k in xrange(0, numRuns/numParallelJobs):
     string = "#!/bin/sh \n"
@@ -45,7 +67,7 @@ for k in xrange(0, numRuns/numParallelJobs):
     string += "#SBATCH --time=00:10:00 \n"
     string += "#SBATCH --nodes=1 \n"
     string += "#SBATCH --ntasks=1 \n"
-    string += "#SBATCH --cpus-per-task=4 \n"
+    string += "#SBATCH --cpus-per-task=" + str(cpus) + " \n"
     string += "#SBATCH --mem=" + memory + " \n"
     string += "#SBATCH --mail-type=NONE \n"
     string += "#SBATCH --mail-user=hoergems@gmail.com \n"
