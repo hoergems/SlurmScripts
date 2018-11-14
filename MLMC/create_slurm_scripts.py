@@ -45,6 +45,7 @@ for k in xrange(0, numRuns/numParallelJobs):
 	string += "#SBATCH --time=00:10:00 \n"
 	string += "#SBATCH --nodes=1 \n"
 	string += "#SBATCH --ntasks=1 \n"
+    string += "#SBATCH --cpus-per-task=4 \n"
 	string += "#SBATCH --mem=" + memory + " \n"
 	string += "#SBATCH --mail-type=NONE \n"
 	string += "#SBATCH --mail-user=hoergems@gmail.com \n"
