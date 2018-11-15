@@ -68,8 +68,7 @@ for k in xrange(0, numRuns/numParallelJobs):
     string += "#SBATCH --nodes=1 \n"
     string += "#SBATCH --ntasks=1 \n"
     string += "#SBATCH --cpus-per-task=" + str(cpus) + " \n"
-    string += "#SBATCH --cpu-freq=highm1 \n"
-    string += "#SBATCH --hint=multithread \n"    
+    string += "#SBATCH --cpu-freq=high \n"    
     string += "#SBATCH --mem=" + memory + " \n"
     string += "#SBATCH --mail-type=NONE \n"
     string += "#SBATCH --mail-user=hoergems@gmail.com \n"
@@ -79,7 +78,7 @@ for k in xrange(0, numRuns/numParallelJobs):
     string += "echo $gzMasterUriPort \n"
     string += "export GAZEBO_MASTER_URI=http://localhost:$gzMasterUriPort \n"
     string += "cd /data/hoe01h/oppt_devel/bin \n"
-    string += "./abt --cfg " + configFolder + robot + "/cfg"
+    string += "srun ./abt --cfg " + configFolder + robot + "/cfg"
     string += "/" + robot + "_$SLURM_ARRAY_TASK_ID.cfg \n"
     if (os.path.exists(folder + "/jobs_abt_" + robot + "_" + str(k) + ".sh")):
         os.remove(folder + "/jobs_abt_" + robot + "_" + str(k) + ".sh")
