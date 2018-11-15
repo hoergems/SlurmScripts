@@ -68,6 +68,8 @@ for k in xrange(0, numRuns/numParallelJobs):
     string += "#SBATCH --nodes=1 \n"
     string += "#SBATCH --ntasks=1 \n"
     string += "#SBATCH --cpus-per-task=" + str(cpus) + " \n"
+    string += "#SBATCH --cpu-freq=highm1 \n"
+    string += "#SBATCH --hint=multithread \n"    
     string += "#SBATCH --mem=" + memory + " \n"
     string += "#SBATCH --mail-type=NONE \n"
     string += "#SBATCH --mail-user=hoergems@gmail.com \n"
