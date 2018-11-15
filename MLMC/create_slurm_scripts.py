@@ -64,7 +64,7 @@ for k in xrange(0, numRuns/numParallelJobs):
     string += robot + "ABT \n"
     string += "#SBATCH --array="
     string += str(k * numParallelJobs) + "-" + str(k * numParallelJobs + numParallelJobs-1) + " \n"
-    string += "#SBATCH --time=00:10:00 \n"
+    string += "#SBATCH --time=" + timeString + " \n"
     string += "#SBATCH --nodes=1 \n"
     string += "#SBATCH --ntasks=1 \n"
     string += "#SBATCH --cpus-per-task=" + str(cpus) + " \n"
