@@ -6,6 +6,29 @@ import argparse
 import fileinput
 import shutil
 
+def getTimeString(minutes, planningTime):
+    print "minutes1: " + str(minutes)
+    minutes = int((minutes/1000.0)*planningTime)  
+    print "minutes2: " + str(minutes)
+    hours = 0
+    while minutes > 59:    
+        hours = hours + 1
+        minutes = minutes - 60
+
+    timeString = ""
+    if (hours < 10):
+        timeString += "0" + str(hours)
+    else:
+        timeString += str(hours)
+    timeString += ":"
+    if (minutes < 10):
+        timeString += "0" + str(minutes)
+    else:
+        timeString += str(minutes)
+    timeString += ":00"
+    return timeString
+
+
 parser = argparse.ArgumentParser(description='Process some integers.')
 parser.add_argument('-np', '--numParallelJobs', type=int, default=10,
                     help='Number of obstacles')
@@ -38,28 +61,15 @@ if os.path.isdir(folder):
 os.makedirs(folder)
 
 # Convert time string
-hours = 0
 minutes= args.time
-while minutes > 59:    
-    hours = hours + 1
-    minutes = minutes - 60
 
-timeString = ""
-if (hours < 10):
-    timeString += "0" + str(hours)
-else:
-    timeString += str(hours)
-timeString += ":"
-if (minutes < 10):
-    timeString += "0" + str(minutes)
-else:
-    timeString += str(minutes)
-timeString += ":00"
 
 algs = ["noCorrection", "bias", "correction"]
 times = [1000, 1500, 2500, 3000, 3500, 4000, 4500, 5000]
 
 for time in times:
+    timeString = getTimeString(minutes, time)
+    print "timeString: " + timeString
 
     # Create the scripts for ABT
     for k in xrange(0, numRuns/numParallelJobs):    
@@ -83,11 +93,10 @@ for time in times:
         string += "echo $gzMasterUriPort \n"
         string += "export GAZEBO_MASTER_URI=http://localhost:$gzMasterUriPort \n"
         string += "cd /data/hoe01h/oppt_devel/bin \n"
-        for alg in algs:
-            print "AHHH"
+        for alg in algs:            
             configFilePath = configFolder + robot + "/cfg/" + robot + "_" + alg + "_" + str(time) + "_$SLURM_ARRAY_TASK_ID.cfg"
             string += "./abt --cfg " + configFilePath + " \n"
-            print string
+            
         if (os.path.exists(folder + "/jobs_abt_" + robot + "_" + str(time) + "_" + str(k) + ".sh")):
             os.remove(folder + "/jobs_abt_" + robot + "_" + str(time) + "_" + str(k) + ".sh")
         with open(folder + "/jobs_abt_" + robot + "_" + str(time) + "_" + str(k) + ".sh", 'a+') as f:
