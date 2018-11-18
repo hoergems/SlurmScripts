@@ -57,45 +57,49 @@ else:
 timeString += ":00"
 
 algs = ["noCorrection", "bias", "correction"]
+times = [1000, 1500, 2500, 3000, 3500, 4000, 4500, 5000]
 
-# Create the scripts for ABT
-for k in xrange(0, numRuns/numParallelJobs):    
-    string = "#!/bin/sh \n"
-    string += "# \n"
-    string += "#SBATCH --job-name="
-    string += robot + "ABT \n"
-    string += "#SBATCH --array="
-    string += str(k * numParallelJobs) + "-" + str(k * numParallelJobs + numParallelJobs-1) + " \n"
-    string += "#SBATCH --time=" + timeString + " \n"
-    string += "#SBATCH --nodes=1 \n"
-    string += "#SBATCH --ntasks=1 \n"
-    string += "#SBATCH --cpus-per-task=" + str(cpus) + " \n"
-    string += "#SBATCH --cpu-freq=high \n"    
-    string += "#SBATCH --mem=" + memory + " \n"
-    string += "#SBATCH --mail-type=NONE \n"
-    string += "#SBATCH --mail-user=hoergems@gmail.com \n"
-    string += "source /home/hoe01h/.bash_profile \n"
-    string += "source /data/hoe01h/usr/share/oppt/setup.sh \n"
-    string += "gzMasterUriPort=`expr 11345 + $SLURM_ARRAY_TASK_ID` \n"
-    string += "echo $gzMasterUriPort \n"
-    string += "export GAZEBO_MASTER_URI=http://localhost:$gzMasterUriPort \n"
-    string += "cd /data/hoe01h/oppt_devel/bin \n"
-    for alg in algs:
-        print "AHHH"
-        configFilePath = configFolder + robot + "/cfg/" + robot + "_" + alg + "_$SLURM_ARRAY_TASK_ID.cfg"
-        string += "./abt --cfg " + configFilePath + " \n"
-        print string
-    if (os.path.exists(folder + "/jobs_abt_" + robot + "_" + str(k) + ".sh")):
-        os.remove(folder + "/jobs_abt_" + robot + "_" + str(k) + ".sh")
-    with open(folder + "/jobs_abt_" + robot + "_" + str(k) + ".sh", 'a+') as f:
-        f.write(string)
-print "HELLO"
+for time in times:
 
-print str(numRuns/numParallelJobs)
-		
-shutil.copyfile("run.sh", folder + "/run.sh")
-os.system("chmod +x " + folder + "/run.sh")
-for line in fileinput.input(folder + "/run.sh", inplace=1):
+    # Create the scripts for ABT
+    for k in xrange(0, numRuns/numParallelJobs):    
+        string = "#!/bin/sh \n"
+        string += "# \n"
+        string += "#SBATCH --job-name="
+        string += robot + "ABT \n"
+        string += "#SBATCH --array="
+        string += str(k * numParallelJobs) + "-" + str(k * numParallelJobs + numParallelJobs-1) + " \n"
+        string += "#SBATCH --time=" + timeString + " \n"
+        string += "#SBATCH --nodes=1 \n"
+        string += "#SBATCH --ntasks=1 \n"
+        string += "#SBATCH --cpus-per-task=" + str(cpus) + " \n"
+        string += "#SBATCH --cpu-freq=high \n"    
+        string += "#SBATCH --mem=" + memory + " \n"
+        string += "#SBATCH --mail-type=NONE \n"
+        string += "#SBATCH --mail-user=hoergems@gmail.com \n"
+        string += "source /home/hoe01h/.bash_profile \n"
+        string += "source /data/hoe01h/usr/share/oppt/setup.sh \n"
+        string += "gzMasterUriPort=`expr 11345 + $SLURM_ARRAY_TASK_ID` \n"
+        string += "echo $gzMasterUriPort \n"
+        string += "export GAZEBO_MASTER_URI=http://localhost:$gzMasterUriPort \n"
+        string += "cd /data/hoe01h/oppt_devel/bin \n"
+        for alg in algs:
+            print "AHHH"
+            configFilePath = configFolder + robot + "/cfg/" + robot + "_" + alg + "_" + str(time) + "_$SLURM_ARRAY_TASK_ID.cfg"
+            string += "./abt --cfg " + configFilePath + " \n"
+            print string
+        if (os.path.exists(folder + "/jobs_abt_" + robot + "_" + str(time) + "_" + str(k) + ".sh")):
+            os.remove(folder + "/jobs_abt_" + robot + "_" + str(time) + "_" + str(k) + ".sh")
+        with open(folder + "/jobs_abt_" + robot + "_" + str(time) + "_" + str(k) + ".sh", 'a+') as f:
+            f.write(string)
+    print "HELLO"
+
+    print str(numRuns/numParallelJobs)
+
+runFile = "run.sh"     		
+shutil.copyfile("run.sh", folder + "/" + runFile)
+os.system("chmod +x " + folder + "/" + runFile)
+for line in fileinput.input(folder + "/" + runFile, inplace=1):
     if "endIndex=11" in line:
         line = "endIndex=" + str(1 + 1) + "\n"
     elif "for ((a=0;" in line:
