@@ -56,8 +56,10 @@ else:
     timeString += str(minutes)
 timeString += ":00"
 
+algs = ["noCorrection", "bias", "correction"]
+
 # Create the scripts for ABT
-for k in xrange(0, numRuns/numParallelJobs):
+for k in xrange(0, numRuns/numParallelJobs):    
     string = "#!/bin/sh \n"
     string += "# \n"
     string += "#SBATCH --job-name="
@@ -78,8 +80,11 @@ for k in xrange(0, numRuns/numParallelJobs):
     string += "echo $gzMasterUriPort \n"
     string += "export GAZEBO_MASTER_URI=http://localhost:$gzMasterUriPort \n"
     string += "cd /data/hoe01h/oppt_devel/bin \n"
-    string += "srun ./abt --cfg " + configFolder + robot + "/cfg"
-    string += "/" + robot + "_$SLURM_ARRAY_TASK_ID.cfg \n"
+    for alg in algs:
+        print "AHHH"
+        configFilePath = configFolder + robot + "/cfg/" + robot + "_" + alg + "_$SLURM_ARRAY_TASK_ID.cfg"
+        string += "./abt --cfg " + configFilePath + " \n"
+        print string
     if (os.path.exists(folder + "/jobs_abt_" + robot + "_" + str(k) + ".sh")):
         os.remove(folder + "/jobs_abt_" + robot + "_" + str(k) + ".sh")
     with open(folder + "/jobs_abt_" + robot + "_" + str(k) + ".sh", 'a+') as f:
