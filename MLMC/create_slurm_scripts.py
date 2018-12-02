@@ -106,7 +106,7 @@ for time in times:
         else:
             configFilePath = configFolder + robot + "/cfg/" + robot + "_" + variant + "_" + str(time) + "_$SLURM_ARRAY_TASK_ID.cfg"
             string += "./abtLite --cfg " + configFilePath + " \n"
-        string += "rm /flush1/hoe01h/SlurmScripts/MLMC/mlmc/slurm-${SLURM_ARRAY_JOB_ID}_${$SLURM_ARRAY_TASK_ID}.out"                    
+        string += "rm /flush1/hoe01h/SlurmScripts/MLMC/mlmc/slurm-${SLURM_ARRAY_JOB_ID}_${SLURM_ARRAY_TASK_ID}.out"                    
         if (os.path.exists(folder + "/jobs_abt_" + variant + "_" + robot + "_" + str(time) + "_" + str(k) + ".sh")):
             os.remove(folder + "/jobs_abt_" + variant + "_" + robot + "_" + str(time) + "_" + str(k) + ".sh")
         with open(folder + "/jobs_abt_" + variant + "_" + robot + "_" + str(time) + "_" + str(k) + ".sh", 'a+') as f:
