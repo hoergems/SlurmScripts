@@ -100,7 +100,8 @@ for time in times:
             string += "cd /data/hoe01h/oppt_devel/bin \n"        
         if "pomcp" in variant:
             configFilePath = configFolder + robot + "/cfg/" + robot + "_pomcp_" + str(time) + "_$SLURM_ARRAY_TASK_ID.cfg"
-            string += "./despotSolver --cfg " + configFilePath + " \n"            
+            string += "./despotSolver --cfg " + configFilePath + " \n" 
+        string += "echo $SLURM_ARRAY_JOB_ID \n"           
         else:
             configFilePath = configFolder + robot + "/cfg/" + robot + "_" + variant + "_" + str(time) + "_$SLURM_ARRAY_TASK_ID.cfg"
             string += "./abtLite --cfg " + configFilePath + " \n"            
