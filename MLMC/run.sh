@@ -58,7 +58,8 @@ do
   echo "idx: $i, $i"
   folder=0
   #cd ${folder}
-  for variant in noCorrection bias correction pomcp
+  #for variant in noCorrection bias correction pomcp
+  for variant in correction
   do
     for ((a=0; a < 5; a++))
     do
