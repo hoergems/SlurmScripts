@@ -67,7 +67,7 @@ minutes= args.time
 
 
 algs = ["noCorrection", "bias", "correction"]
-times = [1000, 1500, 2500, 3000, 3500, 4000, 4500, 5000]
+times = [1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000]
 
 for time in times:
     timeString = getTimeString(minutes, time)
