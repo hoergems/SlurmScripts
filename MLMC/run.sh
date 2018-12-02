@@ -54,24 +54,27 @@ time=$5
 echo "START INDEX $start_index"
 
 for (( i=$start_index; i < $endIndex; i++ ))
-do  
+do 
   echo "idx: $i, $i"
   folder=0
   #cd ${folder}
-  for ((a=0; a < 5; a++))
+  for variant in noCorrection bias correction pomcp
   do
-	echo "a: $a"
-	if [ -z "$output" ]
-	then      
-	  echo "Exec jobs_${algorithm}_${robot}_${time}_${a}.sh"
-	  output=$(sbatch jobs_${algorithm}_${robot}_${time}_${a}.sh)      
-	else
-	  echo "Exec jobs_${algorithm}_${robot}_${time}_${a}.sh"
-	  output=$(sbatch --dependency=afterany:$jid jobs_${algorithm}_${robot}_${time}_${a}.sh)
-	fi
-	jid=$(echo $output | tr -cd '[[:digit:]]')
-	echo "jobID: ${jid}"
-	sleep 0.1
+    for ((a=0; a < 5; a++))
+    do
+    	echo "a: $a"
+    	if [ -z "$output" ]
+    	then      
+    	  echo "Exec jobs_${algorithm}_${variant}_${robot}_${time}_${a}.sh"
+    	  output=$(sbatch jobs_${algorithm}_${variant}_${robot}_${time}_${a}.sh)      
+    	else
+    	  echo "Exec jobs_${algorithm}_${variant}_${robot}_${time}_${a}.sh"
+    	  output=$(sbatch --dependency=afterany:$jid jobs_${algorithm}_${variant}_${robot}_${time}_${a}.sh)
+    	fi
+    	jid=$(echo $output | tr -cd '[[:digit:]]')
+    	echo "jobID: ${jid}"
+    	sleep 0.1
+    done
   done
   cd ..
    
