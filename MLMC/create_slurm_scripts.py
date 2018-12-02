@@ -39,8 +39,11 @@ parser.add_argument('-m', '--memory', type=str, default="4096", help="The amout 
 parser.add_argument('-cf', '--configFolder', type=str, required=True, help="Path where the config files are stored in")
 parser.add_argument('-t', '--time', type=int, default=5, help="Allocated time for each run")
 parser.add_argument('-cp', '--cpus', type=int, default=1, help="Number of cpu cores")
+parser.add_argument('-a', '--algorithm', type=str, help="The algorithm to use")
 
 args = parser.parse_args()
+
+algorithm = args.algorithm
 
 numParallelJobs = args.numParallelJobs
 numRuns = args.numRuns
@@ -56,9 +59,9 @@ robotExec = "robot"
 shared_path = os.path.dirname(os.path.abspath(__file__))
 
 folder = "mlmc"
-if os.path.isdir(folder):
+'''if os.path.isdir(folder):
     shutil.rmtree(folder)
-os.makedirs(folder)
+os.makedirs(folder)'''
 
 # Convert time string
 minutes= args.time
@@ -92,14 +95,21 @@ for time in times:
         string += "gzMasterUriPort=`expr 11345 + $SLURM_ARRAY_TASK_ID` \n"
         string += "echo $gzMasterUriPort \n"
         string += "export GAZEBO_MASTER_URI=http://localhost:$gzMasterUriPort \n"
-        string += "cd /data/hoe01h/oppt_devel/bin \n"
-        for alg in algs:            
-            configFilePath = configFolder + robot + "/cfg/" + robot + "_" + alg + "_" + str(time) + "_$SLURM_ARRAY_TASK_ID.cfg"
-            string += "./abt --cfg " + configFilePath + " \n"
-            
-        if (os.path.exists(folder + "/jobs_abt_" + robot + "_" + str(time) + "_" + str(k) + ".sh")):
-            os.remove(folder + "/jobs_abt_" + robot + "_" + str(time) + "_" + str(k) + ".sh")
-        with open(folder + "/jobs_abt_" + robot + "_" + str(time) + "_" + str(k) + ".sh", 'a+') as f:
+        if "pomcp" in algorithm:
+            string += "cd /data/hoe01h/despot/bin \n"
+            variant = "pomcp"
+        else:
+            string += "cd /data/hoe01h/oppt_devel/bin \n"        
+        if "pomcp" in algorithm:
+            configFilePath = configFolder + robot + "/cfg/" + robot + "_pomcp_" + str(time) + "_$SLURM_ARRAY_TASK_ID.cfg"
+            string += "./despotSolver --cfg " + configFilePath + " \n"            
+        else:                  
+            for alg in algs:            
+                configFilePath = configFolder + robot + "/cfg/" + robot + "_" + alg + "_" + str(time) + "_$SLURM_ARRAY_TASK_ID.cfg"
+                string += "./abtLite --cfg " + configFilePath + " \n"            
+        if (os.path.exists(folder + "/jobs_" + algorithm + "_" + robot + "_" + str(time) + "_" + str(k) + ".sh")):
+            os.remove(folder + "/jobs_" + algorithm + "_" + robot + "_" + str(time) + "_" + str(k) + ".sh")
+        with open(folder + "/jobs_" + algorithm + "_" + robot + "_" + str(time) + "_" + str(k) + ".sh", 'a+') as f:
             f.write(string)
     print "HELLO"
 
