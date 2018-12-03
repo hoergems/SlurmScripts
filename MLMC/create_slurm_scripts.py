@@ -40,7 +40,7 @@ parser.add_argument('-cf', '--configFolder', type=str, required=True, help="Path
 parser.add_argument('-t', '--time', type=int, default=5, help="Allocated time for each run")
 parser.add_argument('-cp', '--cpus', type=int, default=1, help="Number of cpu cores")
 parser.add_argument('-var', '--variant', type=str, help="variant")
-parser.add_argument('-st', '--startIdx', type=int, default=0, help="start index in the array")
+parser.add_argument('-st', '--startIdx', type=int, default=1, help="start index in the array")
 
 args = parser.parse_args()
 variant = args.variant
@@ -76,13 +76,15 @@ for time in times:
     print "timeString: " + timeString
 
     # Create the scripts for ABT
-    for k in xrange(startIdx, numRuns/numParallelJobs):    
+    for k in xrange(0, (numRuns/numParallelJobs)):
+        shift = (startIdx-1) * (numParallelJobs)
+        print "shift " + str(shift)   
         string = "#!/bin/sh \n"
         string += "# \n"
         string += "#SBATCH --job-name="
         string += robot + "ABT \n"
         string += "#SBATCH --array="
-        string += str(k * numParallelJobs) + "-" + str(k * numParallelJobs + numParallelJobs-1) + " \n"
+        string += str(k * numParallelJobs + shift) + "-" + str(k * numParallelJobs + numParallelJobs-1 + shift) + " \n"
         string += "#SBATCH --time=" + timeString + " \n"
         string += "#SBATCH --nodes=1 \n"
         string += "#SBATCH --ntasks=1 \n"
