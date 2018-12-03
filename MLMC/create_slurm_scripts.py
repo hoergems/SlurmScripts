@@ -40,6 +40,7 @@ parser.add_argument('-cf', '--configFolder', type=str, required=True, help="Path
 parser.add_argument('-t', '--time', type=int, default=5, help="Allocated time for each run")
 parser.add_argument('-cp', '--cpus', type=int, default=1, help="Number of cpu cores")
 parser.add_argument('-var', '--variant', type=str, help="variant")
+parser.add_argument('-st', '--startIdx', type=int, default=0, help="start index in the array")
 
 args = parser.parse_args()
 variant = args.variant
@@ -48,6 +49,7 @@ numParallelJobs = args.numParallelJobs
 numRuns = args.numRuns
 memory = args.memory
 cpus = args.cpus
+startIdx=args.startIdx
 configFolder = args.configFolder
 if (configFolder.strip()[-1] != "/"):
     configFolder += "/"
@@ -74,7 +76,7 @@ for time in times:
     print "timeString: " + timeString
 
     # Create the scripts for ABT
-    for k in xrange(0, numRuns/numParallelJobs):    
+    for k in xrange(startIdx, numRuns/numParallelJobs):    
         string = "#!/bin/sh \n"
         string += "# \n"
         string += "#SBATCH --job-name="
