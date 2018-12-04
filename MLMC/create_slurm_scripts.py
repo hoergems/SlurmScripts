@@ -60,9 +60,8 @@ robotExec = "robot"
 shared_path = os.path.dirname(os.path.abspath(__file__))
 
 folder = "mlmc"
-'''if os.path.isdir(folder):
-    shutil.rmtree(folder)
-os.makedirs(folder)'''
+if not os.path.isdir(folder):
+    os.makedirs(folder)
 
 # Convert time string
 minutes= args.time
