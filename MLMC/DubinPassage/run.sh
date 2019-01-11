@@ -1,11 +1,10 @@
 #! /bin/bash
-# Usage: ./run.sh robot start_index (should be 1 when starting from the beginning) onlyIndex|afterIndex algorithm planningTime
+# Usage: ./run.sh robot start_index (should be 1 when starting from the beginning) onlyIndex|afterIndex algorithm
 
 unset output
 start_index=1
 algorithm=""
 endIndex=11
-time=1000
 
 if [ -z $1 ]
 then
@@ -43,14 +42,6 @@ fi
 
 algorithm=$4 
 
-if [ -z $5 ]
-then
-    echo "No planning time provided"
-    exit 
-fi
-
-time=$5
-
 echo "START INDEX $start_index"
 
 for (( i=$start_index; i < $endIndex; i++ ))
@@ -66,11 +57,11 @@ do
     	echo "a: $a"
     	if [ -z "$output" ]
     	then      
-    	  echo "Exec jobs_${algorithm}_${variant}_${robot}_${time}_${a}.sh"
-    	  output=$(sbatch jobs_${algorithm}_${variant}_${robot}_${time}_${a}.sh)      
+    	  echo "Exec jobs_${algorithm}_${variant}_${robot}_${a}.sh"
+    	  output=$(sbatch jobs_${algorithm}_${variant}_${robot}_${a}.sh)      
     	else
-    	  echo "Exec jobs_${algorithm}_${variant}_${robot}_${time}_${a}.sh"
-    	  output=$(sbatch --dependency=afterany:$jid jobs_${algorithm}_${variant}_${robot}_${time}_${a}.sh)
+    	  echo "Exec jobs_${algorithm}_${variant}_${robot}_${a}.sh"
+    	  output=$(sbatch --dependency=afterany:$jid jobs_${algorithm}_${variant}_${robot}_${a}.sh)
     	fi
     	jid=$(echo $output | tr -cd '[[:digit:]]')
     	echo "jobID: ${jid}"
