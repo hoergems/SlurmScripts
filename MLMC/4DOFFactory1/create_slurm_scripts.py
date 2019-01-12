@@ -110,7 +110,7 @@ for time in times:
             configFilePath = configFolder + robot + "/cfg/" + robot + "_pomcp_" + str(planningTime) + "_$SLURM_ARRAY_TASK_ID.cfg"
             string += "./despotSolver --cfg " + configFilePath + " \n"
         else:
-            configFilePath = configFolder + robot + "/cfg/" + robot + "_" + variant + "_" + str(planningTime) "_$SLURM_ARRAY_TASK_ID.cfg"
+            configFilePath = configFolder + robot + "/cfg/" + robot + "_" + variant + "_" + str(planningTime) + "_$SLURM_ARRAY_TASK_ID.cfg"
             if "correction" in variant:
                 string += "./abtLite --cfg " + configFilePath + " \n"
             else:
