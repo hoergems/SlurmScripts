@@ -114,7 +114,7 @@ for time in times:
             if "correction" in variant:
                 string += "./abtLite --cfg " + configFilePath + " \n"
             else:
-                string += "./abtLite --cfg " + configFilePath + " \n"
+                string += "./abt --cfg " + configFilePath + " \n"
         #string += "rm /flush1/hoe01h/SlurmScripts/MLMC/mlmc/slurm-${SLURM_ARRAY_JOB_ID}_${SLURM_ARRAY_TASK_ID}.out \n"                    
         if (os.path.exists(folder + "/jobs_abt_" + variant + "_" + robot + "_" + str(planningTime) + "_" +str(k) + ".sh")):
             os.remove(folder + "/jobs_abt_" + variant + "_" + robot + "_" + str(planningTime) + "_" + str(k) + ".sh")
